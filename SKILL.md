@@ -75,10 +75,23 @@ python3 -I $S/analyze.py --brief brief.json
 ## 7. 出报告
 
 ```bash
-python3 -I $S/build_report.py --brief brief.json
+python3 -I $S/build_report.py --brief brief.json                 # 自动选风格
+python3 -I $S/build_report.py --brief brief.json --style wrapped # 指定风格
 ```
 
-生成 `<brand-slug>-report.html`。发布前看一次（截图或预览），修明显的排版问题，然后按 Artifact 工具的规则发布，并把 CSV 一起告诉用户。
+报告按 PC 端浏览排版（最宽 1200px，图表双栏），手机上自动收成单列。有 5 种风格：
+
+| 风格 | `style` | 适合 |
+|---|---|---|
+| 咨询报告风 | `consulting` | 给老板、客户、投资人汇报：图表编号、结论式标题、来源行 |
+| 年度回顾风 | `wrapped` | 社媒传播、录屏视频：大色块、超大数字 |
+| 品牌调性风 | `brand` | 美妆、时尚、生活方式品牌：梦幻配色、衬线大字 |
+| 暗黑科技风 | `terminal` | AI、SaaS、硬件、App：近黑底、等宽数字 |
+| 小红书手账风 | `notebook` | 小红书图文和视频：方格纸、便利贴、荧光笔 |
+
+选择顺序：用户点名 → `narrative.json` / brief 的 `style` → 用途 `purpose`（汇报→consulting，社媒/视频→wrapped，小红书→notebook）→ 品类 `category`（beauty/fashion/lifestyle→brand，tech/app→terminal）→ 默认 consulting。立项时如果用户提到报告给谁看、发在哪，就写进 `purpose`。不确定时可以用 `--style` 各出一版让用户挑。
+
+生成后看一次（截图或预览），修明显的排版问题，再按 Artifact 工具的规则发布，并把 CSV 一起告诉用户。
 
 ## 8. 更新对标库
 

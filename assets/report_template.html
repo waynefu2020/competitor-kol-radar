@@ -1,98 +1,177 @@
 <title>__TITLE__</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<script>document.documentElement.dataset.style = "__STYLE__";</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&display=swap">
+<link rel="stylesheet" href="__FONTS__">
 <style>
-/* Layout: one phone-friendly column (~780px) of story cards, one finding per card; ornamental dividers separate chapters. Theme preset via body class (rose | ink). */
+/* Layout: desktop-first report (max 1200px) — hero split into verdict + dot matrix, 4-up KPI row, paired chart cards in two columns, full-width tables; collapses to one column under 900px.
+   Style presets live on :root[data-style]: consulting | wrapped | brand | terminal | notebook. Chart category colors per preset are CVD-validated. */
 :root {
-  --bg: #fbf4f7; --surface: #fffafc; --card: #ffffff; --ink: #2a1b2e; --ink-2: #5e4a63; --ink-3: #8c7a90; --rule: #ecdce5;
-  --accent: #c23d78; --gold: #b08a4a; --satin-a: #fde9f1; --satin-b: #efe7fb; --satin-c: #e6f2fb;
-  --seq: #c23d78; --r1: #e58ab0; --r2: #d4609a; --r3: #b8417c; --r4: #932f62; --r5: #6c2149; --r0: #d9ccd5;
-  --c-organic: #1f9e86; --c-gifted: #d98a2b; --c-affiliate: #2a86c2; --c-paid: #c23d78; --c-collab: #7b62d3;
-  --good: #0ca30c; --warn: #fab219;
-  --f-display: "Noto Serif SC", "Songti SC", "STSong", serif;
-  --f-latin: "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
-  --f-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --bg: #f5f6f8; --card: #ffffff; --surface: #f7f8fa; --ink: #0b1f3a; --ink-2: #44546b; --ink-3: #7a8799; --rule: #d9dfe7;
+  --accent: #1f5fbf; --seq: #1f5fbf; --on-accent: #ffffff;
+  --r1: #86b6ef; --r2: #5598e7; --r3: #2a78d6; --r4: #1c5cab; --r5: #104281; --r0: #c9ced6;
+  --c-organic: #2a78d6; --c-gifted: #eb6834; --c-affiliate: #1baf7a; --c-paid: #eda100; --c-collab: #e87ba4;
+  --st1: #e9f0fb; --st2: #e9f0fb; --st3: #e9f0fb; --st4: #0b1f3a; --st-ink: #0b1f3a; --st4-ink: #ffffff;
+  --radius: 4px; --shadow: none;
+  --f-display: "IBM Plex Sans", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --f-num: "IBM Plex Sans", "Noto Sans SC", system-ui, sans-serif;
+  --f-hand: var(--f-body);
   --f-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --h-weight: 700;
 }
-body.ink { --bg: #f4f6f9; --surface: #fbfcfe; --ink: #121821; --ink-2: #4a5566; --ink-3: #7a8494; --rule: #dde3ea; --accent: #1c5cab; --gold: #8a9bb3;
-  --satin-a: #e5eefb; --satin-b: #eef1f6; --satin-c: #e3f3ee; --seq: #2a78d6; --r1: #86b6ef; --r2: #5598e7; --r3: #2a78d6; --r4: #1c5cab; --r5: #104281; --r0: #c9ced6; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #1a1219; --surface: #211823; --card: #271c2a; --ink: #f6ecf2; --ink-2: #d2bfcb; --ink-3: #a592a0; --rule: #3a2b3b;
-    --accent: #e17aa6; --gold: #cfae74; --satin-a: #3a1f30; --satin-b: #2c2440; --satin-c: #1d2c3a;
-    --seq: #d4558b; --r1: #8e3765; --r2: #b2487f; --r3: #d0639a; --r4: #e48ab2; --r5: #f3b4cf; --r0: #4a3a48;
-    --c-organic: #22a88e; --c-gifted: #b5792a; --c-affiliate: #3b93d1; --c-paid: #d4558b; --c-collab: #9283e6;
-    color-scheme: dark;
-  }
-  :root:not([data-theme="light"]) body.ink { --bg: #111317; --surface: #191c21; --card: #1e2229; --ink: #eceef2; --ink-2: #b2b9c5; --ink-3: #868e9b; --rule: #2c3038;
-    --accent: #6da7ec; --gold: #6b7a90; --satin-a: #1b2a40; --satin-b: #1b1f27; --satin-c: #16302a; --seq: #3987e5;
-    --r1: #9ec5f4; --r2: #6da7ec; --r3: #3987e5; --r4: #256abf; --r5: #184f95; --r0: #4a505b; }
+/* ---------- consulting ---------- */
+@media (prefers-color-scheme: dark) { :root[data-style="consulting"]:not([data-theme="light"]) {
+  --bg: #0f1217; --card: #161a20; --surface: #1c2129; --ink: #e8edf5; --ink-2: #b4bfcf; --ink-3: #8592a6; --rule: #2a313c; --accent: #6da7ec; --seq: #3987e5; --on-accent: #0f1217;
+  --r1: #9ec5f4; --r2: #6da7ec; --r3: #3987e5; --r4: #256abf; --r5: #184f95; --r0: #4a505b;
+  --c-organic: #3987e5; --c-gifted: #d95926; --c-affiliate: #199e70; --c-paid: #c98500; --c-collab: #d55181;
+  --st1: #1c2633; --st2: #1c2633; --st3: #1c2633; --st4: #e8edf5; --st-ink: #e8edf5; --st4-ink: #0f1217; color-scheme: dark; } }
+:root[data-style="consulting"][data-theme="dark"] {
+  --bg: #0f1217; --card: #161a20; --surface: #1c2129; --ink: #e8edf5; --ink-2: #b4bfcf; --ink-3: #8592a6; --rule: #2a313c; --accent: #6da7ec; --seq: #3987e5; --on-accent: #0f1217;
+  --r1: #9ec5f4; --r2: #6da7ec; --r3: #3987e5; --r4: #256abf; --r5: #184f95; --r0: #4a505b;
+  --c-organic: #3987e5; --c-gifted: #d95926; --c-affiliate: #199e70; --c-paid: #c98500; --c-collab: #d55181;
+  --st1: #1c2633; --st2: #1c2633; --st3: #1c2633; --st4: #e8edf5; --st-ink: #e8edf5; --st4-ink: #0f1217; color-scheme: dark; }
+/* ---------- wrapped (single dark world) ---------- */
+:root[data-style="wrapped"] {
+  --bg: #1d0b4f; --card: #2a1666; --surface: #341c78; --ink: #ffffff; --ink-2: #ddd4ff; --ink-3: #ab9de6; --rule: #4a2f99;
+  --accent: #ff5ca8; --seq: #e0558f; --on-accent: #1d0b4f;
+  --r1: #f3b4cf; --r2: #e48ab2; --r3: #d0639a; --r4: #b2487f; --r5: #8e3765; --r0: #5a4a8a;
+  --c-organic: #19a67a; --c-gifted: #b67c00; --c-affiliate: #3d8fe0; --c-paid: #e0558f; --c-collab: #8d74ec;
+  --st1: #ff5ca8; --st2: #2ee6a6; --st3: #ffd23f; --st4: #4cc3ff; --st-ink: #1d0b4f; --st4-ink: #1d0b4f;
+  --radius: 28px; --shadow: none;
+  --f-display: "Bricolage Grotesque", "Noto Sans SC", sans-serif; --f-num: "Bricolage Grotesque", "Noto Sans SC", sans-serif;
+  --f-body: "Noto Sans SC", "PingFang SC", system-ui, sans-serif; --h-weight: 900; color-scheme: dark;
 }
-:root[data-theme="dark"] {
-  --bg: #1a1219; --surface: #211823; --card: #271c2a; --ink: #f6ecf2; --ink-2: #d2bfcb; --ink-3: #a592a0; --rule: #3a2b3b;
-  --accent: #e17aa6; --gold: #cfae74; --satin-a: #3a1f30; --satin-b: #2c2440; --satin-c: #1d2c3a;
-  --seq: #d4558b; --r1: #8e3765; --r2: #b2487f; --r3: #d0639a; --r4: #e48ab2; --r5: #f3b4cf; --r0: #4a3a48;
+/* ---------- brand (dreamy, light + dark) ---------- */
+:root[data-style="brand"] {
+  --bg: #fbf4f7; --card: #ffffff; --surface: #fffafc; --ink: #2a1b2e; --ink-2: #5e4a63; --ink-3: #8c7a90; --rule: #ecdce5;
+  --accent: #c23d78; --seq: #c23d78; --on-accent: #ffffff; --gold: #b08a4a;
+  --satin-a: #fde9f1; --satin-b: #efe7fb; --satin-c: #e6f2fb;
+  --r1: #e58ab0; --r2: #d4609a; --r3: #b8417c; --r4: #932f62; --r5: #6c2149; --r0: #d9ccd5;
+  --c-organic: #1f9e86; --c-gifted: #d98a2b; --c-affiliate: #2a86c2; --c-paid: #c23d78; --c-collab: #7b62d3;
+  --st1: #fffafc; --st2: #fffafc; --st3: #fffafc; --st4: #2a1b2e; --st-ink: #2a1b2e; --st4-ink: #fbf4f7;
+  --radius: 22px; --shadow: 0 1px 0 var(--rule), 0 12px 32px -24px rgba(120, 40, 80, .35);
+  --f-display: "Noto Serif SC", "Songti SC", serif; --f-num: "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  --f-body: "Noto Sans SC", "PingFang SC", system-ui, sans-serif; --h-weight: 900;
+}
+@media (prefers-color-scheme: dark) { :root[data-style="brand"]:not([data-theme="light"]) {
+  --bg: #1a1219; --card: #271c2a; --surface: #211823; --ink: #f6ecf2; --ink-2: #d2bfcb; --ink-3: #a592a0; --rule: #3a2b3b;
+  --accent: #e17aa6; --seq: #d4558b; --on-accent: #1a1219; --gold: #cfae74; --satin-a: #3a1f30; --satin-b: #2c2440; --satin-c: #1d2c3a;
+  --r1: #8e3765; --r2: #b2487f; --r3: #d0639a; --r4: #e48ab2; --r5: #f3b4cf; --r0: #4a3a48;
   --c-organic: #22a88e; --c-gifted: #b5792a; --c-affiliate: #3b93d1; --c-paid: #d4558b; --c-collab: #9283e6;
-  color-scheme: dark;
+  --st1: #211823; --st2: #211823; --st3: #211823; --st4: #f6ecf2; --st-ink: #f6ecf2; --st4-ink: #1a1219; color-scheme: dark; } }
+:root[data-style="brand"][data-theme="dark"] {
+  --bg: #1a1219; --card: #271c2a; --surface: #211823; --ink: #f6ecf2; --ink-2: #d2bfcb; --ink-3: #a592a0; --rule: #3a2b3b;
+  --accent: #e17aa6; --seq: #d4558b; --on-accent: #1a1219; --gold: #cfae74; --satin-a: #3a1f30; --satin-b: #2c2440; --satin-c: #1d2c3a;
+  --r1: #8e3765; --r2: #b2487f; --r3: #d0639a; --r4: #e48ab2; --r5: #f3b4cf; --r0: #4a3a48;
+  --c-organic: #22a88e; --c-gifted: #b5792a; --c-affiliate: #3b93d1; --c-paid: #d4558b; --c-collab: #9283e6;
+  --st1: #211823; --st2: #211823; --st3: #211823; --st4: #f6ecf2; --st-ink: #f6ecf2; --st4-ink: #1a1219; color-scheme: dark; }
+/* ---------- terminal (single dark world) ---------- */
+:root[data-style="terminal"] {
+  --bg: #08090b; --card: #0e1014; --surface: #13161b; --ink: #e8eaee; --ink-2: #a7adba; --ink-3: #737a88; --rule: #23262d;
+  --accent: #5b7cfa; --seq: #5b7cfa; --on-accent: #08090b;
+  --r1: #9ec5f4; --r2: #6da7ec; --r3: #3987e5; --r4: #256abf; --r5: #184f95; --r0: #3a3f4a;
+  --c-organic: #1fae7e; --c-gifted: #c98500; --c-affiliate: #3987e5; --c-paid: #d55181; --c-collab: #8b7cf0;
+  --st1: #13161b; --st2: #13161b; --st3: #13161b; --st4: #13161b; --st-ink: #e8eaee; --st4-ink: #e8eaee;
+  --radius: 10px; --shadow: none;
+  --f-display: "IBM Plex Sans", "Noto Sans SC", system-ui, sans-serif; --f-num: "IBM Plex Mono", ui-monospace, monospace;
+  --f-body: "IBM Plex Sans", "Noto Sans SC", system-ui, sans-serif; --h-weight: 600; color-scheme: dark;
 }
-:root[data-theme="dark"] body.ink { --bg: #111317; --surface: #191c21; --card: #1e2229; --ink: #eceef2; --ink-2: #b2b9c5; --ink-3: #868e9b; --rule: #2c3038;
-  --accent: #6da7ec; --gold: #6b7a90; --satin-a: #1b2a40; --satin-b: #1b1f27; --satin-c: #16302a; --seq: #3987e5;
-  --r1: #9ec5f4; --r2: #6da7ec; --r3: #3987e5; --r4: #256abf; --r5: #184f95; --r0: #4a505b; }
+/* ---------- notebook (light + dark) ---------- */
+:root[data-style="notebook"] {
+  --bg: #fffdf6; --card: #ffffff; --surface: #fffefa; --ink: #2b2b2b; --ink-2: #555049; --ink-3: #8a847a; --rule: #e9e4d6;
+  --accent: #d9466a; --seq: #d9466a; --on-accent: #ffffff; --hl: #fff27a; --hl2: #b8f2d9; --tape: #ffd6e0cc;
+  --r1: #e58ab0; --r2: #d4609a; --r3: #b8417c; --r4: #932f62; --r5: #6c2149; --r0: #ddd6c8;
+  --c-organic: #1f9e86; --c-gifted: #d98a2b; --c-affiliate: #2a86c2; --c-paid: #c23d78; --c-collab: #7b62d3;
+  --st1: #fff27a; --st2: #ffd6e0; --st3: #c9f2df; --st4: #cfe5ff; --st-ink: #2b2b2b; --st4-ink: #2b2b2b;
+  --radius: 6px; --shadow: 2px 3px 0 rgba(0,0,0,.06);
+  --f-display: "ZCOOL KuaiLe", "Noto Sans SC", sans-serif; --f-num: "ZCOOL KuaiLe", "Noto Sans SC", sans-serif;
+  --f-hand: "Ma Shan Zheng", "ZCOOL KuaiLe", cursive; --f-body: "Noto Sans SC", "PingFang SC", system-ui, sans-serif; --h-weight: 400;
+}
+@media (prefers-color-scheme: dark) { :root[data-style="notebook"]:not([data-theme="light"]) {
+  --bg: #1a1814; --card: #211d18; --surface: #26221c; --ink: #f1ece2; --ink-2: #cfc6b6; --ink-3: #9d9483; --rule: #36302a;
+  --accent: #f07a98; --seq: #d4558b; --on-accent: #1a1814; --hl: #6b5f12; --hl2: #1f5a46; --tape: #7a3f52aa;
+  --r1: #8e3765; --r2: #b2487f; --r3: #d0639a; --r4: #e48ab2; --r5: #f3b4cf; --r0: #4a4238;
+  --c-organic: #22a88e; --c-gifted: #b5792a; --c-affiliate: #3b93d1; --c-paid: #d4558b; --c-collab: #9283e6;
+  --st1: #4d4413; --st2: #4d2633; --st3: #1f4636; --st4: #1f3550; --st-ink: #f1ece2; --st4-ink: #f1ece2; color-scheme: dark; } }
+:root[data-style="notebook"][data-theme="dark"] {
+  --bg: #1a1814; --card: #211d18; --surface: #26221c; --ink: #f1ece2; --ink-2: #cfc6b6; --ink-3: #9d9483; --rule: #36302a;
+  --accent: #f07a98; --seq: #d4558b; --on-accent: #1a1814; --hl: #6b5f12; --hl2: #1f5a46; --tape: #7a3f52aa;
+  --r1: #8e3765; --r2: #b2487f; --r3: #d0639a; --r4: #e48ab2; --r5: #f3b4cf; --r0: #4a4238;
+  --c-organic: #22a88e; --c-gifted: #b5792a; --c-affiliate: #3b93d1; --c-paid: #d4558b; --c-collab: #9283e6;
+  --st1: #4d4413; --st2: #4d2633; --st3: #1f4636; --st4: #1f3550; --st-ink: #f1ece2; --st4-ink: #f1ece2; color-scheme: dark; }
+
+/* ---------- base layout ---------- */
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.75; }
-.wrap { max-width: 780px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 80px; display: grid; gap: 28px; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.7; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); padding-block: 36px 88px; display: grid; gap: 24px; }
+@media (max-width: 600px) { .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); } }
 a { color: var(--accent); text-underline-offset: 2px; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-h1, h2, h3 { margin: 0; text-wrap: balance; }
-h1 { font-family: var(--f-display); font-weight: 900; font-size: clamp(32px, 7.6vw, 54px); line-height: 1.14; }
-h2 { font-family: var(--f-display); font-weight: 900; font-size: clamp(23px, 5.2vw, 32px); line-height: 1.28; }
-h3 { font-size: 16px; font-weight: 700; }
+h1, h2, h3 { margin: 0; text-wrap: balance; font-family: var(--f-display); font-weight: var(--h-weight); }
+h1 { font-size: clamp(32px, 4.2vw, 52px); line-height: 1.12; }
+h2 { font-size: clamp(20px, 2vw, 25px); line-height: 1.32; }
+h3 { font-size: 16px; font-family: var(--f-body); font-weight: 700; }
 p { margin: 0; }
-.eyebrow { font-family: var(--f-data); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+.eyebrow { font-family: var(--f-data); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
 .num { font-family: var(--f-data); font-variant-numeric: tabular-nums; }
-.note { font-size: 13px; color: var(--ink-3); line-height: 1.6; }
-.card { background: var(--card); border-radius: 22px; padding: clamp(20px, 5vw, 34px); display: grid; gap: 18px; min-width: 0; box-shadow: 0 1px 0 var(--rule), 0 12px 32px -24px rgba(60, 30, 60, .35); }
-.card.satin { background: radial-gradient(120% 90% at 0% 0%, var(--satin-a), transparent 60%), radial-gradient(120% 90% at 100% 100%, var(--satin-c), transparent 55%), var(--satin-b); }
-.chapter { display: grid; gap: 6px; padding-top: 18px; }
-.lace { height: 14px; background: radial-gradient(circle at 7px -1px, transparent 7px, var(--gold) 7.5px, var(--gold) 8.5px, transparent 9px) repeat-x; background-size: 14px 14px; opacity: .55; }
-.verdict { font-family: var(--f-display); font-weight: 600; font-size: clamp(18px, 4.2vw, 22px); color: var(--ink-2); }
-.archetype { display: inline-flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
-.archetype b { font-family: var(--f-display); font-size: 20px; color: var(--accent); }
+.note, .src { font-size: 12.5px; color: var(--ink-3); line-height: 1.6; }
+.src { border-top: 1px solid var(--rule); padding-top: 8px; margin-top: auto; }
+.card { background: var(--card); border-radius: var(--radius); padding: 26px 28px; display: grid; gap: 16px; align-content: start; min-width: 0; box-shadow: var(--shadow); position: relative; }
+.card > header { display: grid; gap: 4px; }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
+.row2 > .card { grid-template-rows: auto 1fr auto; }
+@media (max-width: 900px) { .row2 { grid-template-columns: 1fr; } }
+.part { display: grid; gap: 4px; padding-top: 12px; }
+.part h2 { font-size: clamp(22px, 2.4vw, 30px); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 36px; align-items: center; padding: 36px; }
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 24px; padding: 26px; } }
+.hero .left { display: grid; gap: 18px; }
+.verdict { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); line-height: 1.65; }
+.archetype { display: grid; gap: 4px; padding: 14px 16px; border-radius: calc(var(--radius) * .6); background: var(--surface); border: 1px solid var(--rule); }
+.archetype b { font-family: var(--f-display); font-weight: var(--h-weight); font-size: 22px; color: var(--accent); }
 .archetype span { color: var(--ink-2); font-size: 14px; }
+.hero .right { display: grid; gap: 10px; }
 .dots { width: 100%; height: auto; display: block; }
 .dots circle { cursor: pointer; }
 .dots circle:hover { stroke: var(--ink); stroke-width: 1.4; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); align-items: center; }
-.sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; flex: none; }
 .sq { border-radius: 3px; }
-.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 900px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .stats { grid-template-columns: 1fr; } }
-.stat { border-radius: 18px; padding: 18px 20px; background: var(--surface); display: grid; gap: 4px; align-content: start; border: 1px solid var(--rule); }
-.stat .big { font-family: var(--f-latin); font-weight: 600; font-size: clamp(42px, 10.5vw, 62px); line-height: 1; font-variant-numeric: lining-nums; }
-.stat .big small { font-family: var(--f-body); font-size: 15px; font-weight: 500; color: var(--ink-2); margin-left: 4px; }
-.stat p { color: var(--ink-2); font-size: 14px; }
-.stat.hl { background: var(--ink); border-color: var(--ink); }
-.stat.hl .big, .stat.hl p, .stat.hl .big small { color: var(--bg); }
-.summary { display: grid; gap: 0; }
-.sumrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+.stat { border-radius: var(--radius); padding: 20px 22px; display: grid; gap: 6px; align-content: start; background: var(--st1); color: var(--st-ink); border: 1px solid var(--rule); }
+.stat:nth-child(2) { background: var(--st2); } .stat:nth-child(3) { background: var(--st3); }
+.stat:nth-child(4) { background: var(--st4); color: var(--st4-ink); }
+.stat .big { font-family: var(--f-num); font-weight: 600; font-size: clamp(40px, 4.4vw, 58px); line-height: 1; font-variant-numeric: lining-nums tabular-nums; }
+.stat .big small { font-family: var(--f-body); font-size: 14px; font-weight: 500; margin-left: 4px; opacity: .8; }
+.stat p { font-size: 13.5px; opacity: .85; }
+
+/* summary */
+.summary { display: grid; }
+.sumrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
 .sumrow:last-child { border-bottom: 0; }
 .sumrow .f { font-weight: 700; }
 .sumrow .s { color: var(--ink-2); }
 .sumrow .s::before { content: "所以呢 → "; color: var(--accent); font-weight: 700; }
-@media (max-width: 600px) { .sumrow { grid-template-columns: 1fr; gap: 6px; } }
+@media (max-width: 700px) { .sumrow { grid-template-columns: 1fr; gap: 6px; } }
+
+/* charts */
 .mix { display: grid; gap: 14px; }
-.mixrow { display: grid; grid-template-columns: 6.2em 1fr; gap: 12px; align-items: center; font-size: 14px; }
+.mixrow { display: grid; grid-template-columns: 7em 1fr; gap: 14px; align-items: center; font-size: 14px; }
 .stack { display: flex; height: 30px; gap: 2px; min-width: 0; }
 .seg { height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--f-data); font-size: 12px; color: #fff; min-width: 0; overflow: hidden; white-space: nowrap; }
-.seg:first-child { border-radius: 8px 0 0 8px; }
-.seg:last-child { border-radius: 0 8px 8px 0; }
-.seg:only-child { border-radius: 8px; }
-.seg.light { color: #2a1022; }
+.seg:first-child { border-radius: 6px 0 0 6px; } .seg:last-child { border-radius: 0 6px 6px 0; } .seg:only-child { border-radius: 6px; }
+.seg.light { color: #241322; }
 .mixrow .sub { grid-column: 2; font-size: 12px; color: var(--ink-3); margin-top: -8px; }
-.mult { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-@media (max-width: 680px) { .mult { grid-template-columns: 1fr; } }
+.mult { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 28px; }
+@media (max-width: 900px) { .mult { grid-template-columns: 1fr; } }
 .mc h3 { margin-bottom: 10px; }
 .hb { display: grid; grid-template-columns: 5.4em 1fr; gap: 8px 10px; align-items: center; font-size: 13px; }
 .hb .lab { color: var(--ink-2); display: flex; align-items: center; }
@@ -103,46 +182,98 @@ p { margin: 0; }
 .bar-v { position: absolute; top: 1px; font-family: var(--f-data); font-size: 12px; color: var(--ink); white-space: nowrap; }
 .ticks { grid-column: 2; position: relative; height: 16px; font-family: var(--f-data); font-size: 11px; color: var(--ink-3); }
 .ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
-.ticks span:first-child { transform: none; }
-.ticks span:last-child { transform: translateX(-100%); }
-.tier-rows { display: grid; grid-template-columns: 11.5em 1fr 3.6em; gap: 10px 12px; align-items: center; font-size: 13px; }
-@media (max-width: 520px) { .tier-rows { grid-template-columns: 1fr 3.6em; } .tier-rows > .tl { grid-column: 1 / -1; margin-bottom: -6px; } }
-.rank { display: grid; grid-template-columns: minmax(0, 15em) 1fr; gap: 10px 12px; align-items: center; font-size: 14px; }
+.ticks span:first-child { transform: none; } .ticks span:last-child { transform: translateX(-100%); }
+.tier-rows { display: grid; grid-template-columns: 12em 1fr 4em; gap: 10px 14px; align-items: center; font-size: 13px; }
+@media (max-width: 600px) { .tier-rows { grid-template-columns: 1fr 3.6em; } .tier-rows > .tl { grid-column: 1 / -1; margin-bottom: -6px; } }
+.rank { display: grid; grid-template-columns: minmax(0, 14em) 1fr; gap: 10px 12px; align-items: center; font-size: 14px; }
 .rank .name { min-width: 0; }
-.heat { border-collapse: separate; border-spacing: 3px; }
-.heat td, .heat th { border: 0; }
-.heat td.c { text-align: center; font-family: var(--f-data); font-size: 13px; min-width: 5.2em; border-radius: 6px; }
+.heat { border-collapse: separate; border-spacing: 3px; width: 100%; }
+.heat td, .heat th { border: 0; padding: 7px 8px; }
+.heat td.c { text-align: center; font-family: var(--f-data); font-size: 13px; min-width: 4.6em; border-radius: 6px; }
 .heat td.c small { display: block; font-size: 11px; color: var(--ink-3); line-height: 1.2; }
-.heat td.c.dk { color: #fff; }
-.heat td.c.dk small { color: rgba(255,255,255,.8); }
+.heat td.c.dk { color: #fff; } .heat td.c.dk small { color: rgba(255,255,255,.8); }
 .tscroll { overflow-x: auto; min-width: 0; }
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
-th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
 th { font-weight: 500; color: var(--ink-3); font-size: 12px; white-space: nowrap; }
 td.r, th.r { text-align: right; }
 tbody tr:last-child td { border-bottom: 0; }
-tr.me td { background: color-mix(in oklab, var(--accent) 10%, transparent); font-weight: 600; }
+tr.me td { background: color-mix(in oklab, var(--accent) 12%, transparent); font-weight: 600; }
 .pill { display: inline-block; font-size: 12px; padding: 1px 9px; border-radius: 999px; white-space: nowrap; color: #fff; }
 .pill.role { background: var(--ink); color: var(--bg); }
-.actions { display: grid; gap: 14px; }
-.action { display: grid; gap: 8px; padding: 18px 20px; border-radius: 18px; background: var(--surface); border: 1px solid var(--rule); }
-.action .top { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.action .type { font-family: var(--f-display); font-weight: 900; font-size: 15px; padding: 2px 10px; border-radius: 8px; background: var(--ink); color: var(--bg); }
-.action h3 { font-family: var(--f-display); font-size: 18px; }
-.action p { color: var(--ink-2); font-size: 15px; }
-.meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-3); }
+
+/* actions */
+.actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 900px) { .actions { grid-template-columns: 1fr; } }
+.action { display: grid; gap: 10px; align-content: start; padding: 20px 22px; border-radius: calc(var(--radius) * .8); background: var(--surface); border: 1px solid var(--rule); }
+.action .top { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.action .type { font-weight: 700; font-size: 13px; padding: 2px 10px; border-radius: 6px; background: var(--ink); color: var(--bg); }
+.action h3 { font-family: var(--f-display); font-weight: var(--h-weight); font-size: 18px; }
+.action p { color: var(--ink-2); font-size: 14.5px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--ink-3); }
 .meta b { color: var(--ink); font-weight: 600; }
 .bullets { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; color: var(--ink-2); }
 .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-.tab, .chip { font: inherit; font-size: 13px; padding: 5px 13px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink-2); cursor: pointer; }
+.tab, .chip { font: inherit; font-size: 13px; padding: 5px 13px; border-radius: 999px; border: 1px solid var(--rule); background: var(--card); color: var(--ink-2); cursor: pointer; }
 .tab[aria-selected="true"], .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.filters input, .filters select { font: inherit; font-size: 13px; padding: 5px 10px; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); color: var(--ink); }
-.filters input { min-width: 0; flex: 1 1 150px; max-width: 240px; }
+.filters input, .filters select { font: inherit; font-size: 13px; padding: 6px 10px; border: 1px solid var(--rule); border-radius: 8px; background: var(--card); color: var(--ink); }
+.filters input { min-width: 0; flex: 1 1 180px; max-width: 280px; }
 .list td { font-size: 13px; }
-.list td.txt { color: var(--ink-2); min-width: 16em; max-width: 28em; }
-.more { justify-self: start; font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 10px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
-#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12px; line-height: 1.5; padding: 8px 10px; border-radius: 8px; max-width: 280px; box-shadow: 0 6px 18px rgba(0,0,0,.2); }
+.list td.txt { color: var(--ink-2); min-width: 18em; max-width: 34em; }
+.more { justify-self: start; font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--rule); background: var(--card); color: var(--ink); cursor: pointer; }
+#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12px; line-height: 1.5; padding: 8px 10px; border-radius: 8px; max-width: 280px; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.deco { display: none; }
+
+/* ---------- consulting details ---------- */
+:root[data-style="consulting"] .card { border: 1px solid var(--rule); border-top: 3px solid var(--ink); }
+:root[data-style="consulting"] .hero { border-top-width: 6px; }
+:root[data-style="consulting"] .card .eyebrow { color: var(--accent); font-weight: 500; }
+:root[data-style="consulting"] .stat { border-left: 4px solid var(--accent); }
+:root[data-style="consulting"] .stat:nth-child(4) { border-left-color: var(--accent); }
+
+/* ---------- wrapped details ---------- */
+:root[data-style="wrapped"] .hero { overflow: hidden; background: var(--card); }
+:root[data-style="wrapped"] .hero .deco { display: block; position: absolute; border-radius: 50%; pointer-events: none; }
+:root[data-style="wrapped"] .hero .d1 { width: 340px; height: 340px; right: -120px; top: -140px; background: #ff5ca8; opacity: .55; }
+:root[data-style="wrapped"] .hero .d2 { width: 260px; height: 260px; left: 38%; bottom: -170px; background: #2ee6a6; opacity: .4; }
+:root[data-style="wrapped"] .hero > .left, :root[data-style="wrapped"] .hero > .right { position: relative; z-index: 1; }
+:root[data-style="wrapped"] h1 { font-size: clamp(36px, 4.8vw, 60px); letter-spacing: -.01em; }
+:root[data-style="wrapped"] .stat { border: 0; }
+:root[data-style="wrapped"] .stat .big { font-weight: 800; font-size: clamp(48px, 5.4vw, 72px); letter-spacing: -.03em; }
+:root[data-style="wrapped"] .part h2 { font-size: clamp(26px, 3vw, 38px); }
+:root[data-style="wrapped"] .archetype { background: #ffffff; color: var(--on-accent); border: 0; }
+:root[data-style="wrapped"] .archetype b { color: #c2185b; }
+:root[data-style="wrapped"] .archetype span { color: #3b2a6e; }
+
+/* ---------- brand details ---------- */
+:root[data-style="brand"] .hero { background: radial-gradient(120% 90% at 0% 0%, var(--satin-a), transparent 60%), radial-gradient(120% 90% at 100% 100%, var(--satin-c), transparent 55%), var(--satin-b); }
+:root[data-style="brand"] .part::before { content: ""; display: block; height: 14px; margin-bottom: 10px; background: radial-gradient(circle at 7px -1px, transparent 7px, var(--gold) 7.5px, var(--gold) 8.5px, transparent 9px) repeat-x; background-size: 14px 14px; opacity: .55; }
+:root[data-style="brand"] .stat .big { font-weight: 600; }
+:root[data-style="brand"] h1 .latin { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 600; }
+
+/* ---------- terminal details ---------- */
+:root[data-style="terminal"] body { background-image: linear-gradient(#ffffff08 1px, transparent 1px), linear-gradient(90deg, #ffffff08 1px, transparent 1px); background-size: 28px 28px; }
+:root[data-style="terminal"] .card { border: 1px solid var(--rule); }
+:root[data-style="terminal"] .hero { overflow: hidden; }
+:root[data-style="terminal"] .hero .deco.d1 { display: block; position: absolute; width: 640px; height: 320px; left: 50%; top: -180px; transform: translateX(-50%); background: radial-gradient(closest-side, #5b7cfa40, transparent); pointer-events: none; }
+:root[data-style="terminal"] .hero > .left, :root[data-style="terminal"] .hero > .right { position: relative; }
+:root[data-style="terminal"] h1, :root[data-style="terminal"] h2 { letter-spacing: -.01em; }
+:root[data-style="terminal"] .eyebrow::before { content: "// "; }
+:root[data-style="terminal"] .stat .big { font-weight: 500; }
+:root[data-style="terminal"] .archetype b { font-family: var(--f-num); }
+
+/* ---------- notebook details ---------- */
+:root[data-style="notebook"] body { background-image: linear-gradient(var(--rule) 1px, transparent 1px), linear-gradient(90deg, var(--rule) 1px, transparent 1px); background-size: 20px 20px; }
+:root[data-style="notebook"] .card { border: 1px solid var(--rule); }
+:root[data-style="notebook"] .card::before { content: ""; position: absolute; top: -9px; left: 50%; width: 96px; height: 20px; transform: translateX(-50%) rotate(-2deg); background: var(--tape); }
+:root[data-style="notebook"] h2 > span { background: linear-gradient(transparent 58%, var(--hl) 58%); padding: 0 2px; }
+:root[data-style="notebook"] .card:nth-child(even) h2 > span { background: linear-gradient(transparent 58%, var(--hl2) 58%); }
+:root[data-style="notebook"] .verdict { font-family: var(--f-hand); font-size: clamp(20px, 2vw, 26px); color: var(--accent); transform: rotate(-1deg); line-height: 1.45; }
+:root[data-style="notebook"] .stat { border: 0; box-shadow: 2px 3px 0 rgba(0,0,0,.08); }
+:root[data-style="notebook"] .stat:nth-child(odd) { transform: rotate(-1deg); } :root[data-style="notebook"] .stat:nth-child(even) { transform: rotate(1deg); }
+:root[data-style="notebook"] .sumrow .s::before { content: "✍️ "; }
+@media (prefers-reduced-motion: reduce) { :root[data-style="notebook"] .stat { transform: none; } }
 </style>
 
 <div class="wrap" id="app"></div>
@@ -151,7 +282,7 @@ tr.me td { background: color-mix(in oklab, var(--accent) 10%, transparent); font
 <script>
 const D = __DATA__;
 const N = __NARRATIVE__;
-document.body.classList.add(N.theme === 'ink' ? 'ink' : 'rose');
+const STYLE = document.documentElement.dataset.style;
 const CATS = ['organic', 'gifted', 'affiliate', 'paid', 'collab'];
 const CN = { organic: '自然内容', gifted: '寄样（PR）', affiliate: '联盟带货', paid: '付费合作', collab: '品牌合作（未注明）' };
 const SHORT = { organic: '自然', gifted: '寄样', affiliate: '联盟', paid: '付费', collab: '品牌合作' };
@@ -163,119 +294,110 @@ const fmt = n => n == null ? '–' : n >= 1e4 ? (n / 1e4).toFixed(n >= 1e5 ? 1 :
 const pctf = x => x == null ? '–' : (x * 100).toFixed(x < 0.1 ? 1 : 0) + '%';
 const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
 const K = D.kpi;
+const SAMPLE_SRC = `来源：${PL.map(p => `${p} ${D.plat[p].total} 条`).join('、')}，搜索抽样，${esc(D.window)}`;
+let ex = 0;
+const card = (topic, head, body, src = SAMPLE_SRC, extra = '') => {
+  ex += 1;
+  const eb = STYLE === 'consulting' ? `图 ${ex} · ${topic}` : STYLE === 'terminal' ? `${String(ex).padStart(2, '0')}_${topic}` : `${String(ex).padStart(2, '0')} · ${topic}`;
+  return `<section class="card ${extra}"><header><div class="eyebrow">${esc(eb)}</div><h2><span>${esc(head)}</span></h2></header><div>${body}</div>${src ? `<p class="src">${src}</p>` : ''}</section>`;
+};
+const part = (eb, h) => `<div class="part"><div class="eyebrow">${esc(eb)}</div><h2><span>${esc(h)}</span></h2></div>`;
 let html = '';
-const chap = (i, eb, h) => `<section class="chapter"><div class="eyebrow">${String(i).padStart(2, '0')} · ${esc(eb)}</div><h2>${esc(h)}</h2></section>`;
-let ci = 0;
 
-// cover
-html += `<section class="card satin">
-  <div class="eyebrow">竞品红人打法拆解 · ${esc(D.window)} · ${PL.join(' / ')}</div>
-  <h1>${esc(N.brand_display || D.brand)}<br>${esc(N.title_suffix || '红人营销打法拆解')}</h1>
-  <p class="verdict">${esc(N.verdict)}</p>
-  <div class="archetype"><b>${esc(K.archetype)}</b><span>${esc(K.archetype_reason)}</span></div>
-  <svg class="dots" id="dots" role="img" aria-label="内容点阵：每个圆点是一条提到该品牌的内容，颜色表示内容类型"></svg>
-  <div class="legend">${CATS.filter(c => K.bycat[c]).map(c => `<span><i class="sw" style="background:${CC[c]}"></i>${CN[c]} <b class="num">${K.bycat[c]}</b></span>`).join('')}</div>
-  <p class="note">每个圆点 = 1 条提到 ${esc(D.brand)} 的内容，按类型排列。悬停查看博主，点击打开原帖。</p>
-</section>`;
+// hero
+const brandName = esc(N.brand_display || D.brand).replace(/([A-Za-z][A-Za-z .&'-]+)/, '<span class="latin">$1</span>');
+html += `<section class="card hero"><span class="deco d1"></span><span class="deco d2"></span>
+  <div class="left">
+    <div class="eyebrow">竞品红人打法拆解 · ${esc(D.window)} · ${PL.join(' / ')}</div>
+    <h1>${brandName}<br>${esc(N.title_suffix || '红人营销打法拆解')}</h1>
+    <p class="verdict">${esc(N.verdict)}</p>
+    <div class="archetype"><b>${esc(K.archetype)}</b><span>${esc(K.archetype_reason)}</span></div>
+  </div>
+  <div class="right">
+    <svg class="dots" id="dots" role="img" aria-label="内容点阵：每个圆点是一条提到该品牌的内容，颜色表示内容类型"></svg>
+    <div class="legend">${CATS.filter(c => K.bycat[c]).map(c => `<span><i class="sw" style="background:${CC[c]}"></i>${CN[c]} <b class="num">${K.bycat[c]}</b></span>`).join('')}</div>
+    <p class="note">每个圆点 = 1 条提到 ${esc(D.brand)} 的内容。悬停查看博主，点击打开原帖。</p>
+  </div></section>`;
 
 // stats
-const tt = D.plat.TikTok;
-const ratio = K.brandled_vs_organic_views;
+const tt = D.plat.TikTok, ratio = K.brandled_vs_organic_views;
 html += `<div class="stats">
-  <div class="stat"><div class="big">${K.total}<small>条内容</small></div><p>来自 ${K.creators} 位博主（${PL.join('、')}），搜索抽样，规模为下限。</p></div>
-  <div class="stat hl"><div class="big">${pctf(K.organic_share)}<small>自然内容</small></div><p>没有付费、寄样、带货信号的用户自发内容。</p></div>
-  <div class="stat"><div class="big">${K.bycat.paid || 0}<small>条付费合作</small></div><p>占 ${pctf(K.paid_share)}；寄样 ${K.bycat.gifted || 0} 条，联盟带货 ${K.bycat.affiliate || 0} 条。</p></div>
-  <div class="stat"><div class="big">${ratio ? (ratio >= 10 ? ratio.toFixed(0) : ratio.toFixed(1)) + '×' : '–'}</div><p>TikTok 品牌主导内容的播放中位数${tt ? `（${fmt(tt.views_brandled[0])}）` : ''}是自然内容${tt ? `（${fmt(tt.views.organic[0])}）` : ''}的倍数。≥5 说明声量靠买。</p></div>
+  <div class="stat"><div class="big">${K.total}<small>条内容</small></div><p>来自 ${K.creators} 位博主，搜索抽样，规模为下限。</p></div>
+  <div class="stat"><div class="big">${pctf(K.organic_share)}</div><p>自然内容：没有付费、寄样、带货信号的用户自发内容。</p></div>
+  <div class="stat"><div class="big">${K.bycat.paid || 0}<small>条付费</small></div><p>付费占 ${pctf(K.paid_share)}；寄样 ${K.bycat.gifted || 0} 条，联盟 ${K.bycat.affiliate || 0} 条。</p></div>
+  <div class="stat"><div class="big">${ratio ? (ratio >= 10 ? ratio.toFixed(0) : ratio.toFixed(1)) + '×' : '–'}</div><p>TikTok 品牌主导内容${tt ? `（${fmt(tt.views_brandled[0])}）` : ''}与自然内容${tt ? `（${fmt(tt.views.organic[0])}）` : ''}的播放中位数之比。≥5 说明声量靠买。</p></div>
 </div>`;
 
-// summary
-html += `<div class="lace" aria-hidden="true"></div>` + chap(++ci, '执行摘要', H.summary || '结论先行') +
-  `<section class="card"><div class="summary">${(N.summary || []).map(s => `<div class="sumrow"><div class="f">${esc(s.finding)}</div><div class="s">${esc(s.sowhat)}</div></div>`).join('')}</div>
-  ${D.decision_question ? `<p class="note">本次调研要回答的问题：${esc(D.decision_question)}</p>` : ''}</section>`;
-
-// benchmark
+// summary + benchmark
+html += card('执行摘要', H.summary || '结论先行', `<div class="summary">${(N.summary || []).map(s => `<div class="sumrow"><div class="f">${esc(s.finding)}</div><div class="s">${esc(s.sowhat)}</div></div>`).join('')}</div>${D.decision_question ? `<p class="note" style="margin-top:10px">本次调研要回答的问题：${esc(D.decision_question)}</p>` : ''}`, '');
 const B = [...(D.benchmarks || []), D.me];
-html += chap(++ci, '对标定位', H.benchmark || '和对标品牌比，它处在什么位置') + `<section class="card tscroll"><table>
-  <thead><tr><th>品牌</th><th>打法</th><th class="r">自然</th><th class="r">付费</th><th class="r">寄样</th><th class="r">联盟</th><th class="r">品牌主导/自然播放</th><th class="r">商业博主粉丝中位数</th><th class="r">官网社交流量</th></tr></thead>
-  <tbody>${B.map(b => `<tr class="${b === D.me ? 'me' : ''}"><td>${esc(b.brand)}</td><td>${esc(b.archetype)}</td><td class="r num">${pctf(b.organic_share)}</td><td class="r num">${pctf(b.paid_share)}</td><td class="r num">${pctf(b.gifted_share)}</td><td class="r num">${pctf(b.affiliate_share)}</td><td class="r num">${b.brandled_vs_organic_views ? b.brandled_vs_organic_views.toFixed(1) + '×' : '–'}</td><td class="r num">${fmt(b.commercial_follower_median)}</td><td class="r num">${pctf(b.social_traffic_share)}</td></tr>`).join('')}</tbody></table>
-  <p class="note">对标库随每次调研累积。早期品牌的口径可能略有不同，见各自备注。</p></section>`;
+html += card('对标定位', H.benchmark || '和对标品牌比，它处在什么位置', `<div class="tscroll"><table>
+  <thead><tr><th>品牌</th><th>打法</th><th class="r">自然</th><th class="r">付费</th><th class="r">寄样</th><th class="r">联盟</th><th class="r">品牌主导 / 自然播放</th><th class="r">商业博主粉丝中位数</th><th class="r">官网社交流量</th></tr></thead>
+  <tbody>${B.map(b => `<tr class="${b === D.me ? 'me' : ''}"><td>${esc(b.brand)}</td><td>${esc(b.archetype)}</td><td class="r num">${pctf(b.organic_share)}</td><td class="r num">${pctf(b.paid_share)}</td><td class="r num">${pctf(b.gifted_share)}</td><td class="r num">${pctf(b.affiliate_share)}</td><td class="r num">${b.brandled_vs_organic_views ? b.brandled_vs_organic_views.toFixed(1) + '×' : '–'}</td><td class="r num">${fmt(b.commercial_follower_median)}</td><td class="r num">${pctf(b.social_traffic_share)}</td></tr>`).join('')}</tbody></table></div>`,
+  '来源：本技能对标库，口径可能随版本略有差异');
 
-// mix
-html += `<div class="lace" aria-hidden="true"></div>` + chap(++ci, '内容构成', H.mix || '内容构成') + `<section class="card">
-  <div class="legend">${CATS.map(c => `<span><i class="sw sq" style="background:${CC[c]}"></i>${CN[c]}</span>`).join('')}</div>
-  <div class="mix">${PL.map(p => { const d = D.plat[p], n = d.total; return `<div class="mixrow"><b>${p}</b><div class="stack">` +
-    CATS.map(c => d.bycat[c] ? `<div class="seg" data-t="${esc(`${p} · ${CN[c]}<br><b>${d.bycat[c]}</b> 条（${pct(d.bycat[c], n)}%）`)}" style="flex:${d.bycat[c]};background:${CC[c]}">${pct(d.bycat[c], n) >= 8 ? pct(d.bycat[c], n) + '%' : ''}</div>` : '').join('') +
-    `</div><div class="sub">${n} 条内容 · ${d.creators} 位博主 · 商业博主人均 ${d.per_creator_commercial} 条</div></div>`; }).join('')}</div>
-  <p class="note">付费合作 = #ad / sponsored / 平台付费合作标记；寄样 = PR、gifted、感谢品牌寄送；联盟带货 = TikTok Shop、折扣码、零售链接；品牌合作（未注明）= 只有平台商业披露标记。</p></section>`;
+// evidence
+html += part('证据', '内容、播放与博主');
+html += `<div class="row2">` +
+  card('内容构成', H.mix || '内容构成', `<div class="legend" style="margin-bottom:12px">${CATS.map(c => `<span><i class="sw sq" style="background:${CC[c]}"></i>${CN[c]}</span>`).join('')}</div><div class="mix">${PL.map(p => { const d = D.plat[p], n = d.total;
+    return `<div class="mixrow"><b>${p}</b><div class="stack">` + CATS.map(c => d.bycat[c] ? `<div class="seg" data-t="${esc(`${p} · ${CN[c]}<br><b>${d.bycat[c]}</b> 条（${pct(d.bycat[c], n)}%）`)}" style="flex:${d.bycat[c]};background:${CC[c]}">${pct(d.bycat[c], n) >= 9 ? pct(d.bycat[c], n) + '%' : ''}</div>` : '').join('') + `</div><div class="sub">${n} 条 · ${d.creators} 位博主 · 商业博主人均 ${d.per_creator_commercial} 条</div></div>`; }).join('')}</div>`) +
+  card('博主量级', H.tiers || '博主量级', (() => { const T = D.tiers, TC = ['var(--r1)', 'var(--r2)', 'var(--r3)', 'var(--r4)', 'var(--r5)', 'var(--r0)'], LT = [true, false, false, false, false, true];
+    return `<div class="legend" style="margin-bottom:12px">${T.map((t, i) => `<span><i class="sw sq" style="background:${TC[i]}"></i>${esc(t)}</span>`).join('')}</div><div class="tier-rows">` + PL.map(p => [['tiers_comm', '商业'], ['tiers_org', '自然']].map(([k, lab]) => { const t = D.plat[p][k], n = T.reduce((s, z) => s + (t[z] || 0), 0);
+      return `<div class="tl"><b>${p}</b> · ${lab}内容博主</div><div class="stack">` + T.map((z, i) => t[z] ? `<div class="seg${LT[i] ? ' light' : ''}" data-t="${esc(`${p} · ${lab}<br>${z}：<b>${t[z]}</b> 人（${pct(t[z], n)}%）`)}" style="flex:${t[z]};background:${TC[i]}">${pct(t[z], n) >= 12 ? pct(t[z], n) + '%' : ''}</div>` : '').join('') + `</div><div class="num" style="text-align:right;color:var(--ink-2)">${n} 人</div>`; }).join('')).join('') + `</div>`; })()) + `</div>`;
 
-// views
 const lo = 2, hi = 6, x = v => (Math.log10(Math.max(v, 100)) - lo) / (hi - lo) * 100;
 const grid = `<div class="grid-x">${[100, 1e3, 1e4, 1e5, 1e6].map(t => `<i style="left:${x(t)}%"></i>`).join('')}</div>`;
-html += chap(++ci, '播放量', H.views || '播放量') + `<section class="card"><div class="mult">${PL.map(p => { const d = D.plat[p];
-  if (!CATS.some(c => d.views[c][1] > 0)) return `<div class="mc"><h3>${p}</h3><p class="note">该平台接口没有返回播放数据，用点赞衡量互动。</p></div>`;
-  return `<div class="mc"><h3>${p}</h3><div class="hb">` + CATS.filter(c => d.views[c][1] > 0).map(c => { const [v, n] = d.views[c], w = x(v);
-    const lab = w > 72 ? `right:${100 - w + 1.5}%;color:#fff` : `left:calc(${w}% + 6px)`;
+html += card('播放量', H.views || '播放量', `<div class="mult" style="--cols:${PL.length}">${PL.map(p => { const d = D.plat[p];
+  if (!CATS.some(c => d.views[c][1] > 0)) return `<div class="mc"><h3>${p}</h3><p class="note">该平台没有返回播放数据，用点赞衡量互动。</p></div>`;
+  return `<div class="mc"><h3>${p}</h3><div class="hb">` + CATS.filter(c => d.views[c][1] > 0).map(c => { const [v, n] = d.views[c], w = x(v), lab = w > 72 ? `right:${100 - w + 1.5}%;color:#fff` : `left:calc(${w}% + 6px)`;
     return `<div class="lab"><i class="sw" style="background:${CC[c]}"></i>${SHORT[c]}</div><div class="track">${grid}<div class="bar" data-t="${esc(`${p} · ${CN[c]}<br>播放中位数 <b>${fmt(v)}</b><br>样本 ${n} 条`)}" style="width:${w}%;background:${CC[c]}"></div><span class="bar-v" style="${lab}">${fmt(v)}</span></div>`; }).join('') +
-    `<div class="ticks"><span style="left:0%">100</span><span style="left:50%">1万</span><span style="left:100%">100万</span></div></div></div>`; }).join('')}</div>
-  <p class="note">播放量中位数，三个面板共用对数刻度。IG 只有部分 Reels 带播放数据，样本少时仅作参考（悬停看样本量）。</p></section>`;
+    `<div class="ticks"><span style="left:0%">100</span><span style="left:50%">1万</span><span style="left:100%">100万</span></div></div></div>`; }).join('')}</div>`,
+  SAMPLE_SRC + '；播放量中位数，对数刻度，悬停看样本量');
 
-// tiers
-const T = D.tiers, TC = ['var(--r1)', 'var(--r2)', 'var(--r3)', 'var(--r4)', 'var(--r5)', 'var(--r0)'], LT = [true, false, false, false, false, true];
-html += chap(++ci, '博主量级', H.tiers || '博主量级') + `<section class="card">
-  <div class="legend">${T.map((t, i) => `<span><i class="sw sq" style="background:${TC[i]}"></i>${esc(t)}</span>`).join('')}</div>
-  <div class="tier-rows">${PL.map(p => [['tiers_comm', '商业内容'], ['tiers_org', '自然内容']].map(([k, lab]) => { const t = D.plat[p][k], n = T.reduce((s, z) => s + (t[z] || 0), 0);
-    return `<div class="tl"><b>${p}</b> · ${lab}</div><div class="stack">` + T.map((z, i) => t[z] ? `<div class="seg${LT[i] ? ' light' : ''}" data-t="${esc(`${p} · ${lab}<br>${z}：<b>${t[z]}</b> 人（${pct(t[z], n)}%）`)}" style="flex:${t[z]};background:${TC[i]}">${pct(t[z], n) >= 10 ? pct(t[z], n) + '%' : ''}</div>` : '').join('') + `</div><div class="num" style="text-align:right;color:var(--ink-2)">${n} 人</div>`; }).join('')).join('')}</div>
-  <p class="note">按博主人数统计；商业内容 = 寄样、联盟、付费、品牌合作。</p></section>`;
-
-// products
-const prodTot = (D.products || []).map(s => [s, PL.reduce((a, p) => a + (D.plat[p].products[s] || 0), 0), PL.map(p => D.plat[p].products[s] || 0)]).filter(s => s[1] > 0).sort((a, b) => b[1] - a[1]);
-if (prodTot.length) {
-  const mx = prodTot[0][1];
-  html += `<div class="lace" aria-hidden="true"></div>` + chap(++ci, '产品 / 系列', H.products || '哪些产品被讨论最多') + `<section class="card"><div class="rank">${prodTot.map(([s, n, parts]) => { const w = n / mx * 100, lab = w > 80 ? `right:${100 - w + 1.5}%;color:#fff` : `left:calc(${w}% + 6px)`;
-    return `<div class="name">${esc(s)}</div><div class="track"><div class="bar" data-t="${esc(`${s}<br>${PL.map((p, i) => p + ' ' + parts[i]).join(' · ')}`)}" style="width:${w}%;background:var(--seq)"></div><span class="bar-v" style="${lab}">${n}</span></div>`; }).join('')}</div>
-    <p class="note">各平台合计提及次数，一条内容可提及多个。</p></section>`;
-}
-
-// heatmaps
+// what & why
 function heat(keys, field) {
   const vals = keys.map(k => PL.map(p => pct(D.plat[p][field][k] || 0, D.plat[p].total)));
   const order = keys.map((k, i) => [k, vals[i], vals[i].reduce((a, b) => a + b, 0)]).filter(o => o[2] > 0).sort((a, b) => b[2] - a[2]);
-  return `<table class="heat"><thead><tr><th></th>${PL.map(p => `<th style="text-align:center">${p}</th>`).join('')}</tr></thead><tbody>` +
+  return `<div class="tscroll"><table class="heat"><thead><tr><th></th>${PL.map(p => `<th style="text-align:center">${p}</th>`).join('')}</tr></thead><tbody>` +
     order.map(([k, v]) => `<tr><td>${esc(k)}</td>${v.map((z, j) => { const n = D.plat[PL[j]][field][k] || 0, a = Math.round(Math.min(z, 50) / 50 * 85);
-      return `<td class="c${a >= 50 ? ' dk' : ''}" style="background:color-mix(in oklab, var(--seq) ${a}%, var(--surface))">${z}%<small>${n} 条</small></td>`; }).join('')}</tr>`).join('') + `</tbody></table>`;
+      return `<td class="c${a >= 50 ? ' dk' : ''}" style="background:color-mix(in oklab, var(--seq) ${a}%, var(--card))">${z}%<small>${n} 条</small></td>`; }).join('')}</tr>`).join('') + `</tbody></table></div>`;
 }
-html += chap(++ci, '主打内容', H.themes || '内容怎么拍') + `<section class="card tscroll">${heat(D.themes, 'themes')}<p class="note">单元格 = 命中该主题的内容占本平台内容的比例。</p></section>`;
-html += chap(++ci, '主打卖点', H.points || '大家在夸什么') + `<section class="card tscroll">${heat(D.points, 'points')}<p class="note">口径同上。</p></section>`;
-
-// channels
+html += part('内容', '在讲什么、夸什么');
+html += `<div class="row2">` + card('主打内容', H.themes || '内容怎么拍', heat(D.themes, 'themes'), SAMPLE_SRC + '；单元格 = 命中该主题的内容占比') +
+  card('主打卖点', H.points || '大家在夸什么', heat(D.points, 'points'), SAMPLE_SRC + '；口径同左') + `</div>`;
+const prodTot = (D.products || []).map(s => [s, PL.reduce((a, p) => a + (D.plat[p].products[s] || 0), 0), PL.map(p => D.plat[p].products[s] || 0)]).filter(s => s[1] > 0).sort((a, b) => b[1] - a[1]);
+const barList = (items, color, unit) => { const mx = items[0][1]; return `<div class="rank">${items.map(([k, n, tipTxt]) => { const w = n / mx * 100, lab = w > 80 ? `right:${100 - w + 1.5}%;color:#fff` : `left:calc(${w}% + 6px)`;
+  return `<div class="name">${esc(k)}</div><div class="track"><div class="bar" ${tipTxt ? `data-t="${esc(tipTxt)}"` : ''} style="width:${w}%;background:${color}"></div><span class="bar-v" style="${lab}">${n}${unit}</span></div>`; }).join('')}</div>`; };
 const agg = {}; PL.forEach(p => D.plat[p].channels.forEach(([k, n]) => { agg[k] = (agg[k] || 0) + n; }));
 const ce = Object.entries(agg).sort((a, b) => b[1] - a[1]);
-html += `<div class="lace" aria-hidden="true"></div>` + chap(++ci, '转化渠道', H.channels || '在哪里成交');
-if (ce.length) { const mx = ce[0][1];
-  html += `<section class="card"><h3>商业内容指向的购买渠道</h3><div class="rank">${ce.map(([k, n]) => { const w = n / mx * 100, lab = w > 80 ? `right:${100 - w + 1.5}%;color:#fff` : `left:calc(${w}% + 6px)`;
-    return `<div class="name">${esc(k)}</div><div class="track"><div class="bar" style="width:${w}%;background:var(--c-affiliate)"></div><span class="bar-v" style="${lab}">${n} 条</span></div>`; }).join('')}</div></section>`; }
-if (D.traffic && D.traffic.sources) {
-  const names = { direct: '直接访问', searchOrganic: '自然搜索', searchPaid: '付费搜索', referrals: '引荐', mail: '邮件', socialOrganic: '社交（自然）', genAi: 'AI 聊天机器人', displayAds: '展示广告', socialPaid: '社交（付费）', affiliate: '联盟' };
-  const t = Object.entries(D.traffic.sources).sort((a, b) => b[1] - a[1]), tm = t[0][1];
-  html += `<section class="card"><h3>官网流量来源（Similarweb）</h3><div class="hb" style="grid-template-columns:7.5em 1fr">${t.map(([k, v]) => { const w = v / tm * 100, lab = w > 80 ? `right:${100 - w + 1.5}%;color:#fff` : `left:calc(${w}% + 6px)`;
-    return `<div class="lab">${names[k] || k}</div><div class="track"><div class="bar" style="width:${Math.max(w, .6)}%;background:var(--seq)"></div><span class="bar-v" style="${lab}">${(v * 100).toFixed(1)}%</span></div>`; }).join('')}</div>
-    <p class="note">月访问约 ${fmt(D.traffic.monthly)}；国家：${(D.traffic.countries || []).map(([n, s]) => `${esc(n)} ${(s * 100).toFixed(0)}%`).join('、')}。</p></section>`;
+if (prodTot.length || ce.length) {
+  html += `<div class="row2">` +
+    (prodTot.length ? card('产品 / 系列', H.products || '哪些产品被讨论最多', barList(prodTot.map(([s, n, parts]) => [s, n, `${s}<br>${PL.map((p, i) => p + ' ' + parts[i]).join(' · ')}`]), 'var(--seq)', ''), SAMPLE_SRC + '；各平台合计提及次数') : '') +
+    (ce.length ? card('转化渠道', H.channels || '在哪里成交', barList(ce.map(([k, n]) => [k, n, '']), 'var(--c-affiliate)', ' 条'), SAMPLE_SRC + '；商业内容中能识别出的购买渠道') : '') + `</div>`;
 }
-if ((N.channels || []).length) html += `<section class="card tscroll"><table><thead><tr><th>渠道</th><th>地位</th><th>证据</th></tr></thead><tbody>${N.channels.map(c => `<tr><td><b>${esc(c.name)}</b></td><td><span class="pill role">${esc(c.role)}</span></td><td>${esc(c.evidence)}</td></tr>`).join('')}</tbody></table>
-  ${(N.scale_notes || []).length ? `<p class="note">规模参考（口径不一）：${N.scale_notes.map(esc).join(' ')}</p>` : ''}</section>`;
+const hasTraffic = D.traffic && D.traffic.sources, hasCh = (N.channels || []).length;
+if (hasTraffic || hasCh) {
+  html += `<div class="row2">`;
+  if (hasTraffic) { const names = { direct: '直接访问', searchOrganic: '自然搜索', searchPaid: '付费搜索', referrals: '引荐', mail: '邮件', socialOrganic: '社交（自然）', genAi: 'AI 聊天机器人', displayAds: '展示广告', socialPaid: '社交（付费）', affiliate: '联盟' };
+    const t = Object.entries(D.traffic.sources).sort((a, b) => b[1] - a[1]), tm = t[0][1];
+    html += card('官网流量', '官网流量从哪来', `<div class="hb" style="grid-template-columns:7.5em 1fr">${t.map(([k, v]) => { const w = v / tm * 100, lab = w > 80 ? `right:${100 - w + 1.5}%;color:#fff` : `left:calc(${w}% + 6px)`;
+      return `<div class="lab">${names[k] || k}</div><div class="track"><div class="bar" style="width:${Math.max(w, .6)}%;background:var(--seq)"></div><span class="bar-v" style="${lab}">${(v * 100).toFixed(1)}%</span></div>`; }).join('')}</div><p class="note" style="margin-top:10px">月访问约 ${fmt(D.traffic.monthly)}；${(D.traffic.countries || []).map(([n, s]) => `${esc(n)} ${(s * 100).toFixed(0)}%`).join('、')}</p>`, '来源：Similarweb'); }
+  if (hasCh) html += card('渠道全景', '核心渠道与正在加码的渠道', `<div class="tscroll"><table><thead><tr><th>渠道</th><th>地位</th><th>证据</th></tr></thead><tbody>${N.channels.map(c => `<tr><td><b>${esc(c.name)}</b></td><td><span class="pill role">${esc(c.role)}</span></td><td>${esc(c.evidence)}</td></tr>`).join('')}</tbody></table></div>${(N.scale_notes || []).length ? `<p class="note" style="margin-top:10px">规模参考（口径不一）：${N.scale_notes.map(esc).join(' ')}</p>` : ''}`, '来源：公开报道，见文末');
+  html += `</div>`;
+}
 
 // actions
-html += `<div class="lace" aria-hidden="true"></div>` + chap(++ci, '建议动作', H.actions || '我们该怎么做') + `<section class="card"><div class="actions">${(N.actions || []).map(a => `<div class="action">
-  <div class="top"><span class="type">${esc(a.type)}</span><h3>${esc(a.title)}</h3></div><p>${esc(a.detail)}</p>
-  <div class="meta"><span>优先级 <b>${esc(a.priority)}</b></span><span>预算 <b>${esc(a.budget)}</b></span><span>怎么验证 <b>${esc(a.measure)}</b></span></div></div>`).join('')}</div></section>`;
+html += part('行动', H.actions || '我们该怎么做');
+html += `<div class="actions">${(N.actions || []).map(a => `<div class="action"><div class="top"><span class="type">${esc(a.type)}</span><h3>${esc(a.title)}</h3></div><p>${esc(a.detail)}</p>
+  <div class="meta"><span>优先级 <b>${esc(a.priority)}</b></span><span>预算 <b>${esc(a.budget)}</b></span><span>怎么验证 <b>${esc(a.measure)}</b></span></div></div>`).join('')}</div>`;
 
-// top + list + method
-html += chap(++ci, '案例', '播放量最高的内容') + `<div class="tabs" role="tablist" id="top-tabs"></div><section class="card tscroll"><table id="top"></table></section>`;
-html += chap(++ci, '明细', '全部内容清单') + `<div class="filters"><div class="tabs" id="f-plat"></div><select id="f-cat" aria-label="内容类型"></select>
+// cases, list, method
+html += part('明细', '案例与全部内容');
+html += `<section class="card"><header><div class="eyebrow">播放量最高的内容</div></header><div class="tabs" role="tablist" id="top-tabs"></div><div class="tscroll"><table id="top"></table></div></section>`;
+html += `<section class="card"><div class="filters"><div class="tabs" id="f-plat"></div><select id="f-cat" aria-label="内容类型"></select>
   <select id="f-sort" aria-label="排序"><option value="v">按播放量</option><option value="f">按粉丝数</option><option value="ts">按发布时间</option></select>
-  <input id="f-q" type="search" placeholder="搜索博主或文案" aria-label="搜索博主或文案"></div>
-  <section class="card tscroll"><table class="list" id="list"></table></section><button class="more" id="more" type="button"></button>`;
-html += `<section class="chapter"><div class="eyebrow">方法</div><h2>口径与局限</h2></section><section class="card"><ul class="bullets">
+  <input id="f-q" type="search" placeholder="搜索博主或文案" aria-label="搜索博主或文案"></div><div class="tscroll"><table class="list" id="list"></table></div><button class="more" id="more" type="button"></button></section>`;
+html += `<section class="card"><header><div class="eyebrow">方法</div><h2><span>口径与局限</span></h2></header><ul class="bullets">
   <li>样本是搜索抽样，不是全量：${PL.map(p => `${p} ${D.plat[p].total} 条`).join('、')}。没有披露的合作会被算进自然内容，付费规模视为下限。</li>
   <li>分类优先看文案（#ad / PR / 折扣码 / 零售链接），平台标记兜底；YouTube 只看标题和简介中提到品牌的行。已剔除官方号、仿冒号、同名噪音和竞品赞助内容。</li>
   ${D.coverage && Object.keys(D.coverage.sources || {}).some(s => s !== 'tikhub') ? `<li>部分数据来自免费兜底工具（${Object.entries(D.coverage.sources).map(([s, n]) => `${esc(s)} ${n} 条`).join('、')}）：${D.coverage.no_date ? `${D.coverage.no_date} 条没有发布日期、未按时间窗过滤；` : ''}缺粉丝数的内容在量级统计中记为"未知"。</li>` : ''}
@@ -295,7 +417,7 @@ function bindTip(el, h) {
 document.querySelectorAll('[data-t]').forEach(el => bindTip(el, el.dataset.t));
 (function () {
   const rows = [...D.rows].sort((a, b) => CATS.indexOf(a.c) - CATS.indexOf(b.c) || (b.v || 0) - (a.v || 0));
-  const cols = 40, g = 18, W = cols * g, Hh = Math.ceil(rows.length / cols) * g, svg = document.getElementById('dots');
+  const cols = Math.max(24, Math.ceil(Math.sqrt(rows.length * 1.4))), g = 18, W = cols * g, Hh = Math.ceil(rows.length / cols) * g, svg = document.getElementById('dots');
   svg.setAttribute('viewBox', `0 0 ${W} ${Hh}`);
   svg.innerHTML = rows.map((d, i) => `<circle data-i="${i}" cx="${(i % cols) * g + g / 2}" cy="${Math.floor(i / cols) * g + g / 2}" r="6.2" fill="${CC[d.c]}"/>`).join('');
   svg.querySelectorAll('circle').forEach(el => { const d = rows[+el.dataset.i];
@@ -305,9 +427,10 @@ document.querySelectorAll('[data-t]').forEach(el => bindTip(el, el.dataset.t));
 (function () {
   const tabs = document.getElementById('top-tabs');
   tabs.innerHTML = PL.map((p, i) => `<button class="tab" role="tab" type="button" aria-selected="${i === 0}" data-k="${p}">${p}</button>`).join('');
-  const render = k => { const rows = D.rows.filter(r => r.p === k && r.v != null).sort((a, b) => b.v - a.v).slice(0, 8);
-    document.getElementById('top').innerHTML = `<thead><tr><th>博主</th><th class="r">粉丝</th><th class="r">播放</th><th>类型</th><th>内容</th></tr></thead><tbody>` +
-      rows.map(r => `<tr><td><a href="${esc(r.u)}" target="_blank" rel="noopener">${esc(r.h)}</a></td><td class="r num">${fmt(r.f)}</td><td class="r num">${fmt(r.v)}</td><td><span class="pill" style="background:${CC[r.c]}">${SHORT[r.c]}</span></td><td style="color:var(--ink-2);min-width:15em">${esc(r.t.slice(0, 80))}</td></tr>`).join('') + `</tbody>`; };
+  const render = k => { const key = D.rows.some(r => r.p === k && r.v != null) ? 'v' : 'l';
+    const rows = D.rows.filter(r => r.p === k && r[key] != null).sort((a, b) => b[key] - a[key]).slice(0, 10);
+    document.getElementById('top').innerHTML = `<thead><tr><th>博主</th><th class="r">粉丝</th><th class="r">${key === 'v' ? '播放' : '点赞'}</th><th>类型</th><th>内容</th></tr></thead><tbody>` +
+      rows.map(r => `<tr><td><a href="${esc(r.u)}" target="_blank" rel="noopener">${esc(r.h)}</a></td><td class="r num">${fmt(r.f)}</td><td class="r num">${fmt(r[key])}</td><td><span class="pill" style="background:${CC[r.c]}">${SHORT[r.c]}</span></td><td style="color:var(--ink-2);min-width:18em">${esc(r.t.slice(0, 100))}</td></tr>`).join('') + `</tbody>`; };
   tabs.addEventListener('click', e => { const b = e.target.closest('.tab'); if (!b) return; tabs.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t === b)); render(b.dataset.k); });
   if (PL.length) render(PL[0]);
 })();
@@ -324,11 +447,11 @@ document.querySelectorAll('[data-t]').forEach(el => bindTip(el, el.dataset.t));
   function render() {
     const rows = D.rows.filter(r => (!st.p || r.p === st.p) && (!st.c || r.c === st.c) && (!st.q || ((r.h || '') + ' ' + r.t).toLowerCase().includes(st.q)));
     rows.sort((a, b) => (b[st.s] ?? -1) - (a[st.s] ?? -1));
-    const shown = st.all ? rows : rows.slice(0, 25);
-    document.getElementById('list').innerHTML = `<thead><tr><th>平台</th><th>博主</th><th class="r">粉丝</th><th>类型</th><th>渠道</th><th class="r">播放</th><th>语言</th><th>日期</th><th>内容摘要</th></tr></thead><tbody>` +
-      (shown.length ? shown.map(r => `<tr><td>${r.p}</td><td><a href="${esc(r.u)}" target="_blank" rel="noopener">${esc(r.h)}</a></td><td class="r num">${fmt(r.f)}</td><td><span class="pill" style="background:${CC[r.c]}">${SHORT[r.c]}</span></td><td style="white-space:nowrap">${esc(r.ch) || '–'}</td><td class="r num">${fmt(r.v)}</td><td style="white-space:nowrap">${LN[r.lang] || r.lang}</td><td class="num" style="white-space:nowrap">${r.ts ? new Date(r.ts * 1000).toISOString().slice(5, 10) : '–'}</td><td class="txt">${esc(r.t)}</td></tr>`).join('')
-        : `<tr><td colspan="9" style="color:var(--ink-3)">没有符合条件的内容，换个筛选条件试试。</td></tr>`) + `</tbody>`;
-    const m = document.getElementById('more'); m.hidden = rows.length <= 25; m.textContent = st.all ? '收起' : `显示全部 ${rows.length} 条`;
+    const shown = st.all ? rows : rows.slice(0, 30);
+    document.getElementById('list').innerHTML = `<thead><tr><th>平台</th><th>博主</th><th class="r">粉丝</th><th>类型</th><th>渠道</th><th class="r">播放</th><th class="r">点赞</th><th>语言</th><th>日期</th><th>内容摘要</th></tr></thead><tbody>` +
+      (shown.length ? shown.map(r => `<tr><td>${r.p}</td><td><a href="${esc(r.u)}" target="_blank" rel="noopener">${esc(r.h)}</a></td><td class="r num">${fmt(r.f)}</td><td><span class="pill" style="background:${CC[r.c]}">${SHORT[r.c]}</span></td><td style="white-space:nowrap">${esc(r.ch) || '–'}</td><td class="r num">${fmt(r.v)}</td><td class="r num">${fmt(r.l)}</td><td style="white-space:nowrap">${LN[r.lang] || r.lang}</td><td class="num" style="white-space:nowrap">${r.ts ? new Date(r.ts * 1000).toISOString().slice(5, 10) : '–'}</td><td class="txt">${esc(r.t)}</td></tr>`).join('')
+        : `<tr><td colspan="10" style="color:var(--ink-3)">没有符合条件的内容，换个筛选条件试试。</td></tr>`) + `</tbody>`;
+    const m = document.getElementById('more'); m.hidden = rows.length <= 30; m.textContent = st.all ? '收起' : `显示全部 ${rows.length} 条`;
   }
   render();
 })();

@@ -3,12 +3,23 @@
   "brand_display": "花知晓 Flower Knows",
   "title_suffix": "海外红人打法拆解",
   "verdict": "典型的自来水型：73% 的海外内容是用户自发晒单，明确付费合作不到 1%。它的声量不是买来的，是产品本身让人想拍。",
-  "theme": "rose",
   "summary": [
-    {"finding": "近 3 个月 797 条海外内容里，73% 是自然内容；付费合作只有 7 条，寄样 29 条。", "sowhat": "照抄它的投放预算没有意义。值得学的是“让用户主动拍”的产品力和包装设计，这部分不花媒介费。"},
-    {"finding": "TikTok 上自然内容的播放中位数约 1.9 万，比品牌主导内容（1.5 万）还高，是联盟带货（3,480）的 5 倍。", "sowhat": "这个品类里，真实用户的晒单比合作内容更有说服力。投放时与其买大号，不如把预算放在寄样和激发 UGC 上。"},
-    {"finding": "大家夸的是包装、系列世界观和少女审美，几乎没人聊显色和持妆。新品 Snow Ballet 一个系列撑起了大半话题。", "sowhat": "差异化可以建在“值得拍”上，而不只是功效。每季一个有世界观的系列，本身就是一次内容事件。"},
-    {"finding": "带货内容指向的第一渠道是 TikTok Shop，其次是官网专属码（多为 5% off）；2026 年 9 月进入约 450 家 Ulta 门店。", "sowhat": "低折扣也能撬动分佣，因为用户本来就想晒。线下零售补的是“打卡场景”和信任背书，不只是销量。"}
+    {
+      "finding": "近 3 个月 797 条海外内容里，73% 是自然内容；付费合作只有 7 条，寄样 29 条。",
+      "sowhat": "照抄它的投放预算没有意义。值得学的是“让用户主动拍”的产品力和包装设计，这部分不花媒介费。"
+    },
+    {
+      "finding": "TikTok 上自然内容的播放中位数约 1.9 万，比品牌主导内容（1.5 万）还高，是联盟带货（3,480）的 5 倍。",
+      "sowhat": "这个品类里，真实用户的晒单比合作内容更有说服力。投放时与其买大号，不如把预算放在寄样和激发 UGC 上。"
+    },
+    {
+      "finding": "大家夸的是包装、系列世界观和少女审美，几乎没人聊显色和持妆。新品 Snow Ballet 一个系列撑起了大半话题。",
+      "sowhat": "差异化可以建在“值得拍”上，而不只是功效。每季一个有世界观的系列，本身就是一次内容事件。"
+    },
+    {
+      "finding": "带货内容指向的第一渠道是 TikTok Shop，其次是官网专属码（多为 5% off）；2026 年 9 月进入约 450 家 Ulta 门店。",
+      "sowhat": "低折扣也能撬动分佣，因为用户本来就想晒。线下零售补的是“打卡场景”和信任背书，不只是销量。"
+    }
   ],
   "headlines": {
     "summary": "一句话：用户替它做了营销",
@@ -23,25 +34,106 @@
     "actions": "如果我们是一个想出海的国货美妆品牌"
   },
   "channels": [
-    {"name": "官网 DTC（flowerknows.co）", "role": "核心", "evidence": "月访问约 110 万，美国占 48%；自然搜索 31%、付费搜索 17%、社交约 12%。联盟走 Impact，专属码多为 5% off。"},
-    {"name": "TikTok Shop", "role": "主要", "evidence": "带货内容里识别出的第一渠道（75 条），黑五和节日礼盒节点集中挂车。"},
-    {"name": "Ulta Beauty", "role": "加码中", "evidence": "2025-12 上线 Ulta 官网；2026-09-20 进入约 450 家门店（Just Dropped Beauty 专区），首个进入 Ulta 门店的中国彩妆品牌。"},
-    {"name": "第三方电商", "role": "补充", "evidence": "YesStyle / Stylevana、亚马逊日本、东南亚 Shopee。部分 YesStyle 内容由零售商赞助。"},
-    {"name": "线下与快闪", "role": "补充", "evidence": "日本药妆店、东南亚屈臣氏、美国 Urban Outfitters；首尔圣水洞、上海快闪带动 IG 打卡内容。"}
+    {
+      "name": "官网 DTC（flowerknows.co）",
+      "role": "核心",
+      "evidence": "月访问约 110 万，美国占 48%；自然搜索 31%、付费搜索 17%、社交约 12%。联盟走 Impact，专属码多为 5% off。"
+    },
+    {
+      "name": "TikTok Shop",
+      "role": "主要",
+      "evidence": "带货内容里识别出的第一渠道（75 条），黑五和节日礼盒节点集中挂车。"
+    },
+    {
+      "name": "Ulta Beauty",
+      "role": "加码中",
+      "evidence": "2025-12 上线 Ulta 官网；2026-09-20 进入约 450 家门店（Just Dropped Beauty 专区），首个进入 Ulta 门店的中国彩妆品牌。"
+    },
+    {
+      "name": "第三方电商",
+      "role": "补充",
+      "evidence": "YesStyle / Stylevana、亚马逊日本、东南亚 Shopee。部分 YesStyle 内容由零售商赞助。"
+    },
+    {
+      "name": "线下与快闪",
+      "role": "补充",
+      "evidence": "日本药妆店、东南亚屈臣氏、美国 Urban Outfitters；首尔圣水洞、上海快闪带动 IG 打卡内容。"
+    }
   ],
-  "scale_notes": ["国内报道：2025 年营收预计破 10 亿元，海外约占 10%。", "海外报道：全球营收超 2 亿美元。", "2026 年珀莱雅拟控股，整体估值约 28.27 亿元。"],
+  "scale_notes": [
+    "国内报道：2025 年营收预计破 10 亿元，海外约占 10%。",
+    "海外报道：全球营收超 2 亿美元。",
+    "2026 年珀莱雅拟控股，整体估值约 28.27 亿元。"
+  ],
   "actions": [
-    {"type": "照搬", "title": "把包装做成内容", "detail": "产品开发阶段就按“开箱一镜到底”设计包装：拆封顺序、特写细节、全系列摆拍效果。设计评审加一项“能不能拍出 3 秒钩子”。", "priority": "高", "budget": "中", "measure": "UGC 中开箱/包装主题占比；新品上市 4 周内自发内容条数"},
-    {"type": "照搬", "title": "每季一个有世界观的系列", "detail": "用主题系列代替单品上新，给系列起名、讲故事、做限定周边，让每次上新都成为一次全网开箱事件。", "priority": "高", "budget": "中", "measure": "新系列上市 30 天的提及量和自然内容占比"},
-    {"type": "改造", "title": "寄样代替买量，但要选对人", "detail": "花知晓的寄样集中在 1–10 万粉的审美型博主。我们先做 50 人寄样池，按“审美调性匹配”而不是粉丝数筛选，内容不做硬性 brief。", "priority": "高", "budget": "低", "measure": "寄样回帖率 ≥ 60%；带动的二次 UGC 数"},
-    {"type": "改造", "title": "低门槛联盟，让晒单顺手变带货", "detail": "开放 Impact / TikTok Shop 联盟，专属码给 5–10%，对普通用户也开放。前提是产品本身有分享欲，否则低折扣撬不动。", "priority": "中", "budget": "低", "measure": "联盟博主数、码核销率、TikTok Shop GMV"},
-    {"type": "避开", "title": "别把预算压在大号硬广上", "detail": "这个品类里合作内容的播放不如自然晒单，大号硬广容易“好看不好卖”。大号只用于新系列首发造势。", "priority": "中", "budget": "—", "measure": "合作内容与自然内容的播放比"},
-    {"type": "先小测", "title": "一场线下快闪，测打卡内容的放大效果", "detail": "在一个核心城市做 3–5 天快闪，提前设计打卡位和限定赠品，对比快闪前后两周的 UGC 量。", "priority": "低", "budget": "中", "measure": "快闪期间 IG/TikTok 打卡内容条数、话题曝光"}
+    {
+      "type": "照搬",
+      "title": "把包装做成内容",
+      "detail": "产品开发阶段就按“开箱一镜到底”设计包装：拆封顺序、特写细节、全系列摆拍效果。设计评审加一项“能不能拍出 3 秒钩子”。",
+      "priority": "高",
+      "budget": "中",
+      "measure": "UGC 中开箱/包装主题占比；新品上市 4 周内自发内容条数"
+    },
+    {
+      "type": "照搬",
+      "title": "每季一个有世界观的系列",
+      "detail": "用主题系列代替单品上新，给系列起名、讲故事、做限定周边，让每次上新都成为一次全网开箱事件。",
+      "priority": "高",
+      "budget": "中",
+      "measure": "新系列上市 30 天的提及量和自然内容占比"
+    },
+    {
+      "type": "改造",
+      "title": "寄样代替买量，但要选对人",
+      "detail": "花知晓的寄样集中在 1–10 万粉的审美型博主。我们先做 50 人寄样池，按“审美调性匹配”而不是粉丝数筛选，内容不做硬性 brief。",
+      "priority": "高",
+      "budget": "低",
+      "measure": "寄样回帖率 ≥ 60%；带动的二次 UGC 数"
+    },
+    {
+      "type": "改造",
+      "title": "低门槛联盟，让晒单顺手变带货",
+      "detail": "开放 Impact / TikTok Shop 联盟，专属码给 5–10%，对普通用户也开放。前提是产品本身有分享欲，否则低折扣撬不动。",
+      "priority": "中",
+      "budget": "低",
+      "measure": "联盟博主数、码核销率、TikTok Shop GMV"
+    },
+    {
+      "type": "避开",
+      "title": "别把预算压在大号硬广上",
+      "detail": "这个品类里合作内容的播放不如自然晒单，大号硬广容易“好看不好卖”。大号只用于新系列首发造势。",
+      "priority": "中",
+      "budget": "—",
+      "measure": "合作内容与自然内容的播放比"
+    },
+    {
+      "type": "先小测",
+      "title": "一场线下快闪，测打卡内容的放大效果",
+      "detail": "在一个核心城市做 3–5 天快闪，提前设计打卡位和限定赠品，对比快闪前后两周的 UGC 量。",
+      "priority": "低",
+      "budget": "中",
+      "measure": "快闪期间 IG/TikTok 打卡内容条数、话题曝光"
+    }
   ],
   "sources": [
-    {"title": "Beauty Independent", "url": "https://www.beautyindependent.com/flower-knows-brings-fairytale-aesthetic-ulta-beauty-c-beauty-gains-ground/"},
-    {"title": "PRNewswire / StreetInsider", "url": "https://www.streetinsider.com/PRNewswire/Flower+Knows+Expands+U.S.+Retail+Distribution+By+Entering+Ulta+Beauty/25715380.html"},
-    {"title": "界面新闻", "url": "https://www.jiemian.com/article/13288116.html"}
+    {
+      "title": "Beauty Independent",
+      "url": "https://www.beautyindependent.com/flower-knows-brings-fairytale-aesthetic-ulta-beauty-c-beauty-gains-ground/"
+    },
+    {
+      "title": "PRNewswire / StreetInsider",
+      "url": "https://www.streetinsider.com/PRNewswire/Flower+Knows+Expands+U.S.+Retail+Distribution+By+Entering+Ulta+Beauty/25715380.html"
+    },
+    {
+      "title": "界面新闻",
+      "url": "https://www.jiemian.com/article/13288116.html"
+    }
   ],
-  "method_notes": ["TikTok 商业标记字段（branded_content_type）的含义为样本推断，TikHub 无官方说明。", "Instagram 话题接口本次未返回播放量，IG 以点赞衡量互动。", "本页为技能的离线冒烟测试样例，数据来自 2026-10-26 的花知晓采集。"]
+  "method_notes": [
+    "TikTok 商业标记字段（branded_content_type）的含义为样本推断，TikHub 无官方说明。",
+    "Instagram 话题接口本次未返回播放量，IG 以点赞衡量互动。",
+    "本页为技能的离线冒烟测试样例，数据来自 2026-10-26 的花知晓采集。"
+  ],
+  "style": "auto",
+  "purpose": "小红书视频"
 }

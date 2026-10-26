@@ -14,7 +14,7 @@
 2. **有没有用？** 付费、寄样、联盟、自然内容各占多少，哪类内容播放更高，博主是什么量级，大家在聊什么、夸什么，导向哪里成交
 3. **我们该怎么办？** 每条发现都配"对我们意味着什么"，建议动作分"照搬 / 改造 / 避开 / 先小测"，带优先级、预算量级和验证指标
 
-交付物是一个适合手机竖屏浏览的网页报告，外加一份可筛选的内容明细 CSV。
+交付物是一个按 PC 端浏览排版的网页报告（5 种风格可选，手机上自动收成单列），外加一份可筛选的内容明细 CSV。
 
 ```
 立项（决策问题）→ 写 brief → 成本预估 → 采集 → 清洗分类 → 人工抽查
@@ -36,6 +36,35 @@
 |---|---|---|---|
 | Plaud（AI 录音卡） | 买量型 | 61% | 153× |
 | 花知晓 Flower Knows（彩妆） | 自来水型 | 73% | 0.8× |
+
+---
+
+## 5 种报告风格
+
+同一份数据，按报告给谁看、发在哪，生成不同风格的网页。可以直接指定，也可以让 Agent 自动选。下图都是同一份花知晓报告的首屏。
+
+| 咨询报告风 `consulting` | 年度回顾风 `wrapped` |
+|---|---|
+| ![咨询报告风](docs/styles/consulting.png) | ![年度回顾风](docs/styles/wrapped.png) |
+| 参考麦肯锡 / BCG：图表编号、结论式标题、每张图都有来源行。**给老板、客户、投资人汇报。** | 参考 Spotify Wrapped：大色块、超大数字。**社媒传播、录屏视频。** |
+
+| 品牌调性风 `brand` | 暗黑科技风 `terminal` |
+|---|---|
+| ![品牌调性风](docs/styles/brand.png) | ![暗黑科技风](docs/styles/terminal.png) |
+| 梦幻配色、衬线大字、蕾丝分隔线。**美妆、时尚、生活方式品牌。** | 参考 Linear / Vercel：近黑底、细线边框、等宽数字。**AI、SaaS、硬件、App。** |
+
+| 小红书手账风 `notebook` | |
+|---|---|
+| ![小红书手账风](docs/styles/notebook.png) | 方格纸、便利贴、荧光笔标题、手写判词。**小红书图文和视频。** |
+
+**自动选择规则**：用户点名 → `style` 字段 → 用途（汇报→咨询，社媒/视频→年度回顾，小红书→手账）→ 品类（美妆时尚→品牌调性，科技 App→暗黑科技）→ 默认咨询报告风。
+
+```bash
+python3 -I scripts/build_report.py --brief brief.json                  # 自动选
+python3 -I scripts/build_report.py --brief brief.json --style notebook # 指定
+```
+
+所有风格的图表配色都经过色盲安全校验，支持浅色 / 深色模式（年度回顾风和暗黑科技风固定深色）。
 
 ---
 
@@ -111,9 +140,10 @@ competitor-kol-radar/
 │   ├── fallback-agent-reach.md 没有 TikHub 时的免费兜底
 │   └── benchmarks.json         对标库
 ├── assets/
-│   ├── report_template.html    报告模板（rose / ink 两套配色）
+│   ├── report_template.html    报告模板（5 种风格）
 │   └── brief.example.json
-└── examples/flowerknows/       样例 brief 与结论
+├── examples/flowerknows/       样例 brief 与结论
+└── docs/styles/                5 种风格截图
 ```
 
 ## 局限
