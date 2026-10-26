@@ -1,0 +1,29 @@
+[
+  {
+    "brand": "Plaud",
+    "category": "tech",
+    "window": "2026-07-28 → 2026-10-26",
+    "archetype": "买量型",
+    "organic_share": 0.61,
+    "paid_share": null,
+    "gifted_share": null,
+    "affiliate_share": 0.25,
+    "brandled_vs_organic_views": 153.5,
+    "commercial_follower_median": 50032,
+    "social_traffic_share": 0.032,
+    "note": "早期口径：品牌投放含专属折扣码，未单列寄样；TikTok 指标。"
+  },
+  {
+    "brand": "Flower Knows",
+    "category": "beauty",
+    "window": "2026-07-28 → 2026-10-26",
+    "archetype": "自来水型",
+    "organic_share": 0.731,
+    "paid_share": 0.009,
+    "gifted_share": 0.036,
+    "affiliate_share": 0.192,
+    "brandled_vs_organic_views": 0.78,
+    "commercial_follower_median": 31978.0,
+    "social_traffic_share": 0.124
+  }
+]

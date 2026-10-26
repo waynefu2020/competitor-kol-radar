@@ -1,0 +1,24 @@
+{
+  "brand": "Flower Knows",
+  "slug": "flowerknows",
+  "category": "beauty",
+  "market": "overseas",
+  "window_days": 90,
+  "end_date": "",
+  "decision_question": "国货彩妆出海，我们能借鉴它的什么打法？",
+  "brand_regex": "flower\\s*knows|flowerknows|花知晓|フラワーノーズ|フラワノーズ|플라워노즈",
+  "official_regex": "flower.?knows|flowe.?r.?knows|花知晓",
+  "noise_regex": "",
+  "tiktok_keywords": ["flower knows", "flower knows makeup", "flowerknows", "flower knows unboxing", "flower knows haul", "flower knows review", "flower knows snow ballet"],
+  "tiktok_pages": 6,
+  "instagram_hashtags": ["flowerknows", "flowerknowsmakeup", "flowerknowspopup"],
+  "instagram_pages": 5,
+  "youtube_queries": ["flower knows", "flower knows makeup", "flower knows review", "flower knows unboxing", "flower knows haul"],
+  "youtube_pages": 3,
+  "products": {
+    "Snow Ballet 雪花芭蕾": "snow ?ballet|雪花芭蕾",
+    "Swan Ballet 天鹅芭蕾": "swan ?ballet|天鹅芭蕾",
+    "Knight Unicorn 骑士独角兽": "knight ?unicorn|unicorn knight"
+  },
+  "competitor_sponsor_regex": ""
+}
