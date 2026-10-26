@@ -63,6 +63,17 @@ mkdir -p ~/.config/tikhub && printf '%s' '你的密钥' > ~/.config/tikhub/key &
 
 不要把 Key 写进 Skill 目录或项目文件。
 
+**没有 TikHub？** 可以用 [Agent Reach](https://github.com/Panniantong/Agent-Reach) 的免费工具链兜底（yt-dlp、xhs-cli、网页搜索）：
+
+| 平台 | 兜底能力 |
+|---|---|
+| YouTube | 播放量、频道、简介；发布日期和订阅数需要浏览器登录态 |
+| 小红书 | 赞藏评转、发布时间（需 `xhs login`） |
+| TikTok | 靠网页搜索发现链接后逐条解析，有播放和发布时间，没有粉丝数，覆盖面窄 |
+| Instagram | 只能读少量公开帖，仅做定性 |
+
+报告会自动注明哪些数据来自兜底、缺了什么。详见 `references/fallback-agent-reach.md`。
+
 ### 3. 对 AI 说一句话
 
 ```
@@ -87,6 +98,7 @@ competitor-kol-radar/
 │   ├── normalize.py            清洗、去噪、五类分类、抽查样本
 │   ├── analyze.py              KPI、打法画像、对标、CSV
 │   ├── build_report.py         生成网页报告
+│   ├── agent_reach_import.py   免费兜底：yt-dlp / xhs-cli 导入
 │   ├── lexicons.py             美妆 / 科技 / App 的选题与卖点词典
 │   ├── tikhub.py · common.py
 ├── references/
@@ -96,6 +108,7 @@ competitor-kol-radar/
 │   ├── channel-signals.md      渠道信号怎么读
 │   ├── platforms-overseas.md   TikHub 接口与字段
 │   ├── platforms-domestic.md   国内平台（实验）
+│   ├── fallback-agent-reach.md 没有 TikHub 时的免费兜底
 │   └── benchmarks.json         对标库
 ├── assets/
 │   ├── report_template.html    报告模板（rose / ink 两套配色）
@@ -107,7 +120,8 @@ competitor-kol-radar/
 
 - 数据是搜索抽样，不是全量；没披露的合作会被算进自然内容，付费规模视为下限
 - TikTok 商业标记字段的含义是根据样本推断的
-- 国内平台（小红书、抖音）目前只有手动采集说明，自动化在路上
+- 国内平台：小红书可通过 xhs-cli 导入，抖音暂未自动化
+- 免费兜底方案的 TikTok 和 Instagram 数据不完整，适合摸底，不适合下强结论
 - 公开报道的营收、估值口径常不一致，报告会并列标注
 
 ## License

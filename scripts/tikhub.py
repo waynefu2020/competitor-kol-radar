@@ -16,7 +16,8 @@ def api_key():
         if os.path.exists(p):
             k = open(p).read().strip()
     if not k:
-        raise SystemExit('缺少 TikHub API Key：设置环境变量 TIKHUB_API_KEY，或写入 ~/.config/tikhub/key（权限 600）。')
+        raise SystemExit('缺少 TikHub API Key：设置环境变量 TIKHUB_API_KEY，或写入 ~/.config/tikhub/key（权限 600）。'
+                         '没有 Key 时改走免费兜底方案，见 references/fallback-agent-reach.md。')
     return k
 
 

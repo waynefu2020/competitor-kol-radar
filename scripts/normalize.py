@@ -85,7 +85,10 @@ def main():
 
     def add(p):
         p['ts'] = to_int(p.get('ts')) or 0
-        if not p['id'] or not (since <= p['ts'] <= end):
+        if not p['id']:
+            return
+        # Fallback sources (yt-dlp search without cookies) carry no date: keep them, flagged, instead of silently dropping.
+        if not p.get('ts_unknown') and not (since <= p['ts'] <= end):
             dropped['时间窗外'] += 1
             return
         if not brand.search(p['text']):
@@ -180,11 +183,16 @@ def main():
     json.dump(handles, open(os.path.join(R, 'ig_handles.json'), 'w'), ensure_ascii=False)
 
     print(f'时间窗 {b["_window"]}；剔除：{dict(dropped)}')
-    for plat in ('TikTok', 'Instagram', 'YouTube'):
+    for plat in ('TikTok', 'Instagram', 'YouTube', '小红书'):
         P = [p for p in rows if p['platform'] == plat]
+        if not P:
+            continue
         print(f'{plat}: {len(P)} 条 / {len({p["handle"] for p in P})} 位博主 / 有粉丝数 {sum(1 for p in P if p.get("followers"))} | '
               f'{dict(collections.Counter(p["cat"] for p in P))}')
     print(f'YouTube 待拉详情 {len(yt)} 条，IG 待查主页 {len(handles)} 个')
+    fb = collections.Counter(p.get('source', 'tikhub') for p in rows)
+    if len(fb) > 1 or 'tikhub' not in fb:
+        print(f'数据来源：{dict(fb)}；其中无发布日期 {sum(1 for p in rows if p.get("ts_unknown"))} 条（未按时间窗过滤）')
     if a.sample and rows:
         print('\n—— 抽查样本（确认：在说这个品牌吗？分类对吗？）——')
         random.seed(7)

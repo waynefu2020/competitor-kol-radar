@@ -156,7 +156,7 @@ const CATS = ['organic', 'gifted', 'affiliate', 'paid', 'collab'];
 const CN = { organic: '自然内容', gifted: '寄样（PR）', affiliate: '联盟带货', paid: '付费合作', collab: '品牌合作（未注明）' };
 const SHORT = { organic: '自然', gifted: '寄样', affiliate: '联盟', paid: '付费', collab: '品牌合作' };
 const CC = Object.fromEntries(CATS.map(c => [c, `var(--c-${c})`]));
-const PL = ['TikTok', 'Instagram', 'YouTube'].filter(p => D.plat[p]);
+const PL = ['TikTok', 'Instagram', 'YouTube', '小红书'].filter(p => D.plat[p]);
 const H = N.headlines || {};
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = n => n == null ? '–' : n >= 1e4 ? (n / 1e4).toFixed(n >= 1e5 ? 1 : 2).replace(/\.?0+$/, '') + ' 万' : Math.round(n).toLocaleString('en-US');
@@ -278,6 +278,7 @@ html += chap(++ci, '明细', '全部内容清单') + `<div class="filters"><div 
 html += `<section class="chapter"><div class="eyebrow">方法</div><h2>口径与局限</h2></section><section class="card"><ul class="bullets">
   <li>样本是搜索抽样，不是全量：${PL.map(p => `${p} ${D.plat[p].total} 条`).join('、')}。没有披露的合作会被算进自然内容，付费规模视为下限。</li>
   <li>分类优先看文案（#ad / PR / 折扣码 / 零售链接），平台标记兜底；YouTube 只看标题和简介中提到品牌的行。已剔除官方号、仿冒号、同名噪音和竞品赞助内容。</li>
+  ${D.coverage && Object.keys(D.coverage.sources || {}).some(s => s !== 'tikhub') ? `<li>部分数据来自免费兜底工具（${Object.entries(D.coverage.sources).map(([s, n]) => `${esc(s)} ${n} 条`).join('、')}）：${D.coverage.no_date ? `${D.coverage.no_date} 条没有发布日期、未按时间窗过滤；` : ''}缺粉丝数的内容在量级统计中记为"未知"。</li>` : ''}
   ${(N.method_notes || []).map(m => `<li>${esc(m)}</li>`).join('')}
   ${(N.sources || []).length ? `<li>来源：${N.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`).join('、')}</li>` : ''}
 </ul></section>`;

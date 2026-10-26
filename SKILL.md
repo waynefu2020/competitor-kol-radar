@@ -40,6 +40,8 @@ python3 -I $S/normalize.py --brief brief.json
 
 一次海外调研通常 400–700 次调用，约 $0.5–1。预估超过 $3 先问用户。
 
+**没有 TikHub Key？** 改走免费兜底：用 Agent Reach 工具链（yt-dlp、xhs-cli、网页搜索）采集，`scripts/agent_reach_import.py` 把结果导入同一套流程。YouTube 和小红书够用，TikTok 只能靠搜索发现链接，Instagram 只能定性。做之前读 `references/fallback-agent-reach.md`，先告诉用户兜底方案会缺哪些数据，再开始。
+
 ## 3. 抽查（不可跳过）
 
 `normalize.py` 会打印各平台分类计数并抽出 20 条样本。逐条看：是不是在说这个品牌？分类对不对？发现系统性误判就改 brief 里的正则后重跑 normalize，而不是在报告里手工修数。常见误判和对策见 `references/pitfalls.md`。
@@ -84,7 +86,7 @@ python3 -I $S/build_report.py --brief brief.json
 
 ## 国内市场（实验）
 
-小红书可用 TikHub `/api/v1/xiaohongshu/app_v2/search_notes` 抓取，口径和信号差异见 `references/platforms-domestic.md`。脚本暂未自动化国内平台：按该文档手动采集，复用 `analyze.py` 的统计口径，并在报告里标注"国内为实验口径"。
+小红书可用 TikHub `/api/v1/xiaohongshu/app_v2/search_notes` 抓取，或用免费的 `agent_reach_import.py xhs`（xhs-cli）导入。口径和信号差异见 `references/platforms-domestic.md`，统计复用 `analyze.py`，报告里标注"国内为实验口径"。
 
 ## 参考文件
 
@@ -96,4 +98,5 @@ python3 -I $S/build_report.py --brief brief.json
 | `references/channel-signals.md` | 写渠道章节前读 |
 | `references/report-spec.md` | 写 narrative.json 前读 |
 | `references/platforms-domestic.md` | 做国内或内外对比时读 |
+| `references/fallback-agent-reach.md` | 没有 TikHub Key、或要用小红书 xhs-cli 时读 |
 | `references/benchmarks.json` | 对标定位时由 analyze.py 自动读取 |

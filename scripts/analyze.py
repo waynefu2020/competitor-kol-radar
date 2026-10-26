@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import SKILL_DIR, load_brief, read_jsonl  # noqa: E402
 from lexicons import POINTS, THEMES  # noqa: E402
 
-PLATS = ['TikTok', 'Instagram', 'YouTube']
+PLATS = ['TikTok', 'Instagram', 'YouTube', '小红书']
 CATS = ['organic', 'gifted', 'affiliate', 'paid', 'collab']
 CN = {'organic': '自然内容', 'gifted': '寄样(PR)', 'affiliate': '联盟带货', 'paid': '付费合作', 'collab': '品牌合作(未注明)'}
 TIERS = ['纳米 <1万', '小 1-10万', '中 10-50万', '大 50-100万', '头部 100万+', '未知']
@@ -138,6 +138,11 @@ def main():
                        countries=[[c.get('countryName'), c.get('share')] for c in (sw.get('topCountries') or [])[:6]])
         kpi['social_traffic_share'] = (ts.get('socialOrganic') or 0) + (ts.get('socialPaid') or 0)
     kpi['archetype'], kpi['archetype_reason'] = archetype(kpi)
+    # The archetype leans on view medians; with few view-bearing posts it is a hint, not a verdict.
+    with_views = sum(1 for p in posts if p['platform'] in ('TikTok', 'YouTube') and isinstance(p.get('views'), (int, float)))
+    if n < 100 or with_views < 30:
+        kpi['archetype'] += '（倾向，样本不足）'
+        kpi['archetype_reason'] += f'但样本只有 {n} 条、带播放量的 {with_views} 条，需要更完整的数据验证。'
 
     bench_path = os.path.join(SKILL_DIR, 'references', 'benchmarks.json')
     bench = [x for x in (json.load(open(bench_path)) if os.path.exists(bench_path) else []) if x.get('brand') != b['brand']]
@@ -151,7 +156,10 @@ def main():
                  l=p.get('likes') if isinstance(p.get('likes'), (int, float)) else None, lang=lang(p.get('title') or p['text']), u=p.get('url'),
                  t=re.sub(r'\s+', ' ', p.get('title') or p['text'])[:140], ts=p['ts']) for p in posts]
 
-    out = dict(brand=b['brand'], category=cat, window=b['_window'], decision_question=b.get('decision_question', ''),
+    coverage = dict(sources=dict(collections.Counter(p.get('source', 'tikhub') for p in posts)),
+                    no_date=sum(1 for p in posts if p.get('ts_unknown')),
+                    no_followers={pn: sum(1 for p in posts if p['platform'] == pn and not p.get('followers')) for pn in plat})
+    out = dict(brand=b['brand'], category=cat, window=b['_window'], decision_question=b.get('decision_question', ''), coverage=coverage,
                plat=plat, kpi=kpi, me=me, benchmarks=bench, traffic=traffic, rows=rows, tiers=TIERS,
                themes=list(themes), points=list(points), products=list(products))
     json.dump(out, open(os.path.join(b['_base'], 'analysis.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
