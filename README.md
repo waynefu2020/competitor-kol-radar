@@ -70,29 +70,46 @@ python3 -I scripts/build_report.py --brief brief.json --style notebook # 指定
 
 ## 快速上手
 
-### 1. 安装
+### 1. 把这句话复制给你的 AI Agent
+
+```
+帮我安装这个 Skill：https://github.com/waynefu2020/competitor-kol-radar
+按仓库里 INSTALL.md 的步骤来。
+```
+
+Claude Code、Codex 等能操作电脑的 Agent 会自己完成下载、放到正确目录、自检。中途它会问你要 TikHub API Key：
+
+- **有 Key**：直接发给它，它会帮你安全保存。到 [tikhub.io](https://tikhub.io) 注册就能拿到，一次海外调研大约 $0.5–1。
+- **没有 Key**：告诉它"先不用"，它会改用免费兜底方案，数据少一些。
+
+### 2. 对 AI 说一句话
+
+```
+帮我拆一下 Flower Knows 最近 3 个月的海外红人营销
+```
+
+其他说法：
+
+- "竞品 XX 在 TikTok / IG / YouTube 上投了哪些博主？"
+- "我们想出海，帮我看看对标品牌是怎么做红人营销的，做成给老板汇报的风格"
+- "XX 的海外声量是买来的还是用户自发的？做成适合发小红书的风格"
+
+<details>
+<summary>技术用户：手动安装</summary>
 
 ```bash
 git clone https://github.com/waynefu2020/competitor-kol-radar.git ~/.claude/skills/competitor-kol-radar
+printf '%s' '你的 TikHub Key' | python3 ~/.claude/skills/competitor-kol-radar/scripts/doctor.py --save-key
+python3 ~/.claude/skills/competitor-kol-radar/scripts/doctor.py
 ```
 
-其他 Agent 放到各自的 skills 目录即可。需要 Python 3.9+，无第三方依赖。
+需要 Python 3.9+，无第三方依赖。Key 存在 `~/.config/tikhub/key`（也可用环境变量 `TIKHUB_API_KEY`），不要写进 Skill 目录或项目文件。其他 Agent 的目录见 [INSTALL.md](INSTALL.md)。
 
-### 2. 配置 TikHub API Key
+</details>
 
-数据来自 [TikHub](https://tikhub.io)（一次海外调研通常 $0.5–1）。二选一：
+### 没有 TikHub 时的免费兜底
 
-```bash
-export TIKHUB_API_KEY=你的密钥
-```
-
-```bash
-mkdir -p ~/.config/tikhub && printf '%s' '你的密钥' > ~/.config/tikhub/key && chmod 600 ~/.config/tikhub/key
-```
-
-不要把 Key 写进 Skill 目录或项目文件。
-
-**没有 TikHub？** 可以用 [Agent Reach](https://github.com/Panniantong/Agent-Reach) 的免费工具链兜底（yt-dlp、xhs-cli、网页搜索）：
+用 [Agent Reach](https://github.com/Panniantong/Agent-Reach) 的免费工具链（yt-dlp、xhs-cli、网页搜索）：
 
 | 平台 | 兜底能力 |
 |---|---|
@@ -103,18 +120,6 @@ mkdir -p ~/.config/tikhub && printf '%s' '你的密钥' > ~/.config/tikhub/key &
 
 报告会自动注明哪些数据来自兜底、缺了什么。详见 `references/fallback-agent-reach.md`。
 
-### 3. 对 AI 说一句话
-
-```
-帮我拆一下 Flower Knows 最近 3 个月的海外红人营销
-```
-
-其他触发说法：
-
-- "竞品 XX 在 TikTok / IG / YouTube 上投了哪些博主？"
-- "我们想出海，帮我看看对标品牌是怎么做红人营销的"
-- "XX 的海外声量是买来的还是用户自发的？"
-
 ---
 
 ## 目录结构
@@ -122,12 +127,14 @@ mkdir -p ~/.config/tikhub && printf '%s' '你的密钥' > ~/.config/tikhub/key &
 ```
 competitor-kol-radar/
 ├── SKILL.md                    流程与判断规则（Agent 读这个）
+├── INSTALL.md                  安装说明（Agent 读这个）
 ├── scripts/
 │   ├── collect.py              采集（--dry-run 预估成本和余额）
 │   ├── normalize.py            清洗、去噪、五类分类、抽查样本
 │   ├── analyze.py              KPI、打法画像、对标、CSV
 │   ├── build_report.py         生成网页报告
 │   ├── agent_reach_import.py   免费兜底：yt-dlp / xhs-cli 导入
+│   ├── doctor.py               安装自检、保存 Key
 │   ├── lexicons.py             美妆 / 科技 / App 的选题与卖点词典
 │   ├── tikhub.py · common.py
 ├── references/
